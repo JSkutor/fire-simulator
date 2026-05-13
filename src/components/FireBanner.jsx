@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function FireBanner({ fireYear, onClear }) {
   if (fireYear === null) return null;
@@ -7,7 +7,9 @@ export default function FireBanner({ fireYear, onClear }) {
       <div className="text-sm text-orange-900">
         <span className="text-base mr-1">🔥</span>
         <span className="font-semibold">FIRE 시점: {fireYear}년차</span>
-        <span className="text-orange-700 ml-2">— 이 시점부터 매년 4% 인출이 반영됩니다</span>
+        <span className="text-orange-700 ml-2">
+          — 이 시점부터 매년 자산 잔액의 4% 인출이 반영됩니다
+        </span>
       </div>
       <button
         onClick={onClear}

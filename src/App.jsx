@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import InputCard from './components/InputCard';
-import PeriodTable from './components/PeriodTable';
-import FireBanner from './components/FireBanner';
-import MetricCard from './components/MetricCard';
-import WealthChart from './components/WealthChart';
-import { calcWealth, WITHDRAW_RATE } from './utils/calc';
-import { fmtKRW, fmtManwon } from './utils/format';
+import React, { useMemo, useState } from "react";
+import InputCard from "./components/InputCard";
+import PeriodTable from "./components/PeriodTable";
+import FireBanner from "./components/FireBanner";
+import MetricCard from "./components/MetricCard";
+import WealthChart from "./components/WealthChart";
+import { calcWealth, WITHDRAW_RATE } from "./utils/calc";
+import { fmtKRW, fmtManwon } from "./utils/format";
 
 export default function App() {
   const [base, setBase] = useState(300000000);
@@ -14,7 +14,10 @@ export default function App() {
   const [fireYear, setFireYear] = useState(null);
   const [hoveredYear, setHoveredYear] = useState(0);
 
-  const data = useMemo(() => calcWealth(base, rate, periods, fireYear), [base, rate, periods, fireYear]);
+  const data = useMemo(
+    () => calcWealth(base, rate, periods, fireYear),
+    [base, rate, periods, fireYear],
+  );
 
   const cur = data[hoveredYear] || data[0];
   const flowN = (cur.nominal * WITHDRAW_RATE) / 12;
@@ -29,12 +32,18 @@ export default function App() {
             4% 룰 자산 시뮬레이터
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            기초자산·수익률 설정 → 저축/지출 구간 추가 → 그래프 클릭으로 FIRE 시점 지정
+            기초자산·수익률 설정 → 저축/지출 구간 추가 → 그래프 클릭으로 FIRE
+            시점 지정
           </p>
         </header>
 
         {/* 1. 기본 입력 */}
-        <InputCard base={base} setBase={setBase} rate={rate} setRate={setRate} />
+        <InputCard
+          base={base}
+          setBase={setBase}
+          rate={rate}
+          setRate={setRate}
+        />
 
         {/* 2. 저축/지출 구간 */}
         <PeriodTable periods={periods} setPeriods={setPeriods} />
@@ -48,8 +57,18 @@ export default function App() {
             자산 규모 · {hoveredYear}년차
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MetricCard title="명목 자산" subtitle="그 시점 화폐 기준" value={fmtKRW(cur.nominal)} accent="blue" />
-            <MetricCard title="실질 자산" subtitle="오늘 구매력 기준" value={fmtKRW(cur.real)} accent="green" />
+            <MetricCard
+              title="명목 자산"
+              subtitle="그 시점 화폐 기준"
+              value={fmtKRW(cur.nominal)}
+              accent="blue"
+            />
+            <MetricCard
+              title="실질 자산"
+              subtitle="오늘 구매력 기준"
+              value={fmtKRW(cur.real)}
+              accent="green"
+            />
           </div>
         </section>
 
@@ -59,8 +78,18 @@ export default function App() {
             월 현금흐름 (4% 룰) · {hoveredYear}년차
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MetricCard title="명목 현금흐름" subtitle="그 시점 화폐 기준" value={`월 ${fmtManwon(flowN)}`} accent="orange" />
-            <MetricCard title="실질 현금흐름" subtitle="오늘 구매력 기준" value={`월 ${fmtManwon(flowR)}`} accent="amber" />
+            <MetricCard
+              title="명목 현금흐름"
+              subtitle="그 시점 화폐 기준"
+              value={`월 ${fmtManwon(flowN)}`}
+              accent="orange"
+            />
+            <MetricCard
+              title="실질 현금흐름"
+              subtitle="오늘 구매력 기준"
+              value={`월 ${fmtManwon(flowR)}`}
+              accent="amber"
+            />
           </div>
         </section>
 

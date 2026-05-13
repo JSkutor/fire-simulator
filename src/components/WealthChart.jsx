@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
   ComposedChart,
   Line,
@@ -8,11 +8,17 @@ import {
   Tooltip,
   ReferenceLine,
   ResponsiveContainer,
-} from 'recharts';
-import ChartTooltip from './ChartTooltip';
-import { fmtAxis } from '../utils/format';
+} from "recharts";
+import ChartTooltip from "./ChartTooltip";
+import { fmtAxis } from "../utils/format";
 
-export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYear, setFireYear }) {
+export default function WealthChart({
+  data,
+  fireYear,
+  hoveredYear,
+  setHoveredYear,
+  setFireYear,
+}) {
   // FIRE 분리용 데이터 가공
   const chartData = useMemo(() => {
     return data.map((d) => {
@@ -39,7 +45,11 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
   }, [data, fireYear]);
 
   const handleClick = (state) => {
-    if (state && state.activeLabel !== undefined && state.activeLabel !== null) {
+    if (
+      state &&
+      state.activeLabel !== undefined &&
+      state.activeLabel !== null
+    ) {
       const y = Number(state.activeLabel);
       if (y === 0) return; // 0년차는 FIRE 지정 불가
       if (fireYear === y) setFireYear(null);
@@ -48,7 +58,11 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
   };
 
   const handleMove = (state) => {
-    if (state && state.activeLabel !== undefined && state.activeLabel !== null) {
+    if (
+      state &&
+      state.activeLabel !== undefined &&
+      state.activeLabel !== null
+    ) {
       setHoveredYear(Number(state.activeLabel));
     }
   };
@@ -57,14 +71,16 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-semibold text-slate-500">자산 성장 곡선</h2>
-        <span className="text-xs text-slate-400">그래프를 클릭해 FIRE 시점을 지정하세요</span>
+        <span className="text-xs text-slate-400">
+          그래프를 클릭해 FIRE 시점을 지정하세요
+        </span>
       </div>
 
-      <div style={{ width: '100%', height: 420, cursor: 'crosshair' }}>
+      <div style={{ width: "100%", height: 420, cursor: "crosshair" }}>
         <ResponsiveContainer>
           <ComposedChart
             data={chartData}
-            margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+            margin={{ top: 30, right: 20, left: 0, bottom: 10 }}
             onClick={handleClick}
             onMouseMove={handleMove}
             onMouseLeave={() => setHoveredYear(0)}
@@ -73,15 +89,32 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
             <XAxis
               dataKey="year"
               ticks={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
-              tick={{ fontSize: 12, fill: '#64748b' }}
-              label={{ value: '년차', position: 'insideBottomRight', offset: -5, fill: '#94a3b8', fontSize: 12 }}
+              tick={{ fontSize: 12, fill: "#64748b" }}
+              label={{
+                value: "년차",
+                position: "insideBottomRight",
+                offset: -5,
+                fill: "#94a3b8",
+                fontSize: 12,
+              }}
             />
             <YAxis
               tickFormatter={fmtAxis}
-              tick={{ fontSize: 12, fill: '#64748b' }}
+              tick={{ fontSize: 12, fill: "#64748b" }}
               width={70}
             />
-            <Tooltip content={<ChartTooltip fireYear={fireYear} />} cursor={{ stroke: '#94a3b8', strokeDasharray: '3 3' }} />
+            <Tooltip
+              content={<ChartTooltip fireYear={fireYear} />}
+              cursor={{ stroke: "#94a3b8", strokeDasharray: "3 3" }}
+              // fire 배지 잘림 이슈로 밑에 추가.
+              allowEscapeViewBox={{ x: false, y: true }}
+              wrapperStyle={{
+                zIndex: 50,
+                outline: "none",
+                pointerEvents: "none",
+              }}
+              offset={16}
+            />
 
             {fireYear === null ? (
               <>
@@ -161,7 +194,14 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
                   stroke="#f97316"
                   strokeWidth={1.5}
                   strokeDasharray="4 4"
-                  label={{ value: '🔥 FIRE', position: 'top', fill: '#ea580c', fontSize: 12, fontWeight: 600 }}
+                  label={{
+                    value: "🔥 FIRE",
+                    position: "top",
+                    fill: "#ea580c",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    offset: 10,
+                  }}
                 />
               </>
             )}
@@ -187,7 +227,8 @@ export default function WealthChart({ data, fireYear, hoveredYear, setHoveredYea
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
-        * 인플레이션 2.3% = 한국 CPI 연평균 (2005~2024년, 통계청·World Bank 기준)
+        * 인플레이션 2.3% = 한국 CPI 연평균 (2005~2024년, 통계청·World Bank
+        기준)
       </p>
     </div>
   );
@@ -199,7 +240,7 @@ function LegendDot({ color, label, dashed = false }) {
       <span
         className="inline-block w-6 h-0"
         style={{
-          borderTop: `${dashed ? '2px dashed' : '2px solid'} ${color}`,
+          borderTop: `${dashed ? "2px dashed" : "2px solid"} ${color}`,
         }}
       />
       <span className="text-slate-600">{label}</span>
