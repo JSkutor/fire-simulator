@@ -50,12 +50,12 @@ export default function ChartTooltip({ active, payload, fireYear }) {
 
       <div className="space-y-1">
         <Row
-          label="명목 가용 인출액"
+          label={isAfter ? "명목 인출액" : "명목 예상 인출액"}
           value={`월 ${fmtManwon(flowMonthN)}`}
           color="text-slate-700"
         />
         <Row
-          label="실질 가용 인출액"
+          label={isAfter ? "실질 인출액" : "실질 예상 인출액"}
           value={`월 ${fmtManwon(flowMonthR)}`}
           color="text-slate-700"
         />

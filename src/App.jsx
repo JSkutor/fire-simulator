@@ -29,27 +29,12 @@ export default function App() {
         {/* 헤더 */}
         <header className="pt-2">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
-            4% 룰 자산 시뮬레이터
+            경제적 자립, 언제?
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            기초자산·수익률 설정 → 저축/지출 구간 추가 → 그래프 클릭으로 FIRE
-            시점 지정
+            복리의 마법과 마르지 않는 현금흐름 시뮬레이션
           </p>
         </header>
-
-        {/* 1. 기본 입력 */}
-        <InputCard
-          base={base}
-          setBase={setBase}
-          rate={rate}
-          setRate={setRate}
-        />
-
-        {/* 2. 저축/지출 구간 */}
-        <PeriodTable periods={periods} setPeriods={setPeriods} />
-
-        {/* 3. FIRE 배너 */}
-        <FireBanner fireYear={fireYear} onClear={() => setFireYear(null)} />
 
         {/* 4. 자산 규모 지표 */}
         <section>
@@ -65,7 +50,7 @@ export default function App() {
             />
             <MetricCard
               title="실질 자산"
-              subtitle="오늘 구매력 기준"
+              subtitle="현재 구매력 기준"
               value={fmtKRW(cur.real)}
               accent="green"
             />
@@ -75,18 +60,18 @@ export default function App() {
         {/* 5. 월 현금흐름 지표 */}
         <section>
           <h2 className="text-xs font-semibold text-slate-500 mb-2 ml-1">
-            월 현금흐름 (4% 룰) · {hoveredYear}년차
+            월 인출액 (FIRE 이전은 실제 월 인출 없음) · {hoveredYear}년차
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MetricCard
-              title="명목 현금흐름"
+              title="명목 인출액"
               subtitle="그 시점 화폐 기준"
               value={`월 ${fmtManwon(flowN)}`}
               accent="orange"
             />
             <MetricCard
-              title="실질 현금흐름"
-              subtitle="오늘 구매력 기준"
+              title="실질 인출액"
+              subtitle="현재 구매력 기준"
               value={`월 ${fmtManwon(flowR)}`}
               accent="amber"
             />
@@ -101,6 +86,20 @@ export default function App() {
           setHoveredYear={setHoveredYear}
           setFireYear={setFireYear}
         />
+
+        {/* 3. FIRE 배너 */}
+        <FireBanner fireYear={fireYear} onClear={() => setFireYear(null)} />
+
+        {/* 1. 기본 입력 */}
+        <InputCard
+          base={base}
+          setBase={setBase}
+          rate={rate}
+          setRate={setRate}
+        />
+
+        {/* 2. 저축/지출 구간 */}
+        <PeriodTable periods={periods} setPeriods={setPeriods} />
 
         <footer className="text-center text-xs text-slate-400 py-6">
           개인 자산 시뮬레이션 · 투자 권유 아님
