@@ -83,7 +83,7 @@ export default function WealthChart({
             margin={{ top: 30, right: 20, left: 0, bottom: 10 }}
             onClick={handleClick}
             onMouseMove={handleMove}
-            onMouseLeave={() => setHoveredYear(0)}
+            onMouseLeave={() => setHoveredYear(fireYear ?? 0)}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis

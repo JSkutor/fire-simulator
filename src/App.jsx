@@ -6,6 +6,7 @@ import MetricCard from "./components/MetricCard";
 import WealthChart from "./components/WealthChart";
 import { calcWealth, WITHDRAW_RATE } from "./utils/calc";
 import { fmtKRW, fmtManwon } from "./utils/format";
+import AnimationTestBoard from "./components/AnimationTestBoard";
 
 export default function App() {
   const [base, setBase] = useState(30000000);
@@ -22,6 +23,15 @@ export default function App() {
   const cur = data[hoveredYear] || data[0];
   const flowN = (cur.nominal * WITHDRAW_RATE) / 12;
   const flowR = (cur.real * WITHDRAW_RATE) / 12;
+
+  // hoveredYear === 0: 그래프 밖, fireYear 미설정 또는 FIRE 전 구간
+  const isWithdrawalProjected =
+    hoveredYear === 0 || !fireYear || hoveredYear < fireYear;
+
+  // test url
+  if (import.meta.env.DEV && window.location.pathname.endsWith("/test")) {
+    return <AnimationTestBoard />;
+  }
 
   return (
     <div className="min-h-screen">
@@ -45,13 +55,15 @@ export default function App() {
             <MetricCard
               title="명목 자산"
               subtitle="미래 액면가 기준"
-              value={fmtKRW(cur.nominal)}
+              value={cur.nominal}
+              formatter={fmtKRW}
               accent="blue"
             />
             <MetricCard
               title="실질 자산"
               subtitle="현재 구매력 기준"
-              value={fmtKRW(cur.real)}
+              value={cur.real}
+              formatter={fmtKRW}
               accent="green"
             />
           </div>
@@ -67,16 +79,20 @@ export default function App() {
             <h2 className="text-xs font-semibold text-slate-500 shrink-0">
               월 인출액 · {hoveredYear}년차
             </h2>
-            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-600 text-xs font-medium">
+            <div className="flex items-center gap-1 text-slate-400 text-[11px]">
               <svg
-                className="w-3 h-3 shrink-0"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+                className="w-3.5 h-3.5 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={
+                  1.25
+                } /* 얇고 부드러운 느낌을 위해 strokeWidth를 줄였습니다 (기존 1.5) */
               >
                 <path
-                  fillRule="evenodd"
-                  d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                  clipRule="evenodd"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 21a9 9 0 100-18 9 9 0 000 18z M12 11v6 M12 8a0.75 0.75 0 110-1.5 0.75 0.75 0 010 1.5z" /* 더 부드럽고 자연스러운 Info 아이콘 형태 */
                 />
               </svg>
               FIRE 이전 실제 인출 없음
@@ -87,14 +103,18 @@ export default function App() {
             <MetricCard
               title="명목 인출액"
               subtitle="미래 액면가 기준"
-              value={`월 ${fmtManwon(flowN)}`}
+              value={flowN}
+              formatter={(v) => `월 ${fmtManwon(v)}`}
               accent="orange"
+              isProjected={isWithdrawalProjected}
             />
             <MetricCard
               title="실질 인출액"
               subtitle="현재 구매력 기준"
-              value={`월 ${fmtManwon(flowR)}`}
+              value={flowR}
+              formatter={(v) => `월 ${fmtManwon(v)}`}
               accent="amber"
+              isProjected={isWithdrawalProjected}
             />
           </div>
         </section>

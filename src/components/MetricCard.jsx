@@ -1,21 +1,59 @@
-import React from 'react';
+import React, { useEffect, useRef } from "react";
+import CountUp from "react-countup";
 
-export default function MetricCard({ title, subtitle, value, accent = 'slate' }) {
-  const colors = {
-    slate: 'text-slate-900',
-    blue: 'text-blue-600',
-    green: 'text-emerald-600',
-    orange: 'text-orange-600',
-    amber: 'text-amber-600',
+export default function MetricCard({
+  title,
+  subtitle,
+  value,
+  formatter,
+  accent = "slate",
+  isProjected = false, // 상태를 제어할 prop 추가 (true일 경우 옅어짐)
+}) {
+  // isProjected 상태에 따라 텍스트 색상의 투명도를 다르게 적용합니다.
+  const textColors = {
+    slate: isProjected ? "text-slate-900/40" : "text-slate-900",
+    blue: isProjected ? "text-blue-600/40" : "text-blue-600",
+    green: isProjected ? "text-emerald-600/40" : "text-emerald-600",
+    orange: isProjected ? "text-orange-600/40" : "text-orange-600",
+    amber: isProjected ? "text-amber-600/40" : "text-amber-600",
   };
+
+  // 이전 value 값을 저장하기 위한 ref 생성 (초기값 0)
+  const prevValueRef = useRef(0);
+
+  // 컴포넌트가 렌더링된 직후, 현재 value를 prevValueRef에 저장합니다.
+  // 다음 렌더링 때 이 값은 '이전 값'으로 사용됩니다.
+  useEffect(() => {
+    prevValueRef.current = value;
+  }, [value]);
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
       <div className="flex items-baseline justify-between mb-1">
-        <span className="text-xs font-semibold text-slate-500">{title}</span>
-        {subtitle && <span className="text-[11px] text-slate-400">{subtitle}</span>}
+        {/* 타이틀과 서브타이틀도 전체적인 톤을 맞추기 위해 살짝 흐리게 처리합니다 */}
+        <span
+          className={`text-xs font-semibold transition-colors duration-300 ${isProjected ? "text-slate-400" : "text-slate-500"}`}
+        >
+          {title}
+        </span>
+        {subtitle && (
+          <span
+            className={`text-[11px] transition-colors duration-300 ${isProjected ? "text-slate-300" : "text-slate-400"}`}
+          >
+            {subtitle}
+          </span>
+        )}
       </div>
-      <div className={`text-2xl font-bold tabular-nums ${colors[accent] || colors.slate}`}>
-        {value}
+      <div
+        className={`text-2xl font-bold tabular-nums transition-colors duration-300 ${textColors[accent] || textColors.slate}`}
+      >
+        <CountUp
+          start={prevValueRef.current}
+          end={value}
+          duration={0.4}
+          useEasing={true}
+          formattingFn={formatter} // 매 프레임마다 숫자가 이 함수를 거쳐서 렌더링됩니다.
+        />
       </div>
     </div>
   );
