@@ -1,0 +1,4 @@
+User-agent: \*
+Allow: /
+
+Sitemap: https://jskutor.github.io/fire-simulator/sitemap.xml
