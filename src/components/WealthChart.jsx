@@ -227,6 +227,10 @@ export default function WealthChart({
       </div>
 
       <p className="text-xs text-slate-400 mt-3">
+        * 명목 가치는 숫자 그대로의 금액, 실질 가치는 물가 상승을 반영해 현재
+        구매력으로 환산한 금액입니다.
+      </p>
+      <p className="text-xs text-slate-400 mt-2">
         * 인플레이션 2.3% = 한국 CPI 연평균 (2005~2024년, 통계청·World Bank
         기준)
       </p>

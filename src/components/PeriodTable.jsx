@@ -48,10 +48,12 @@ export default function PeriodTable({ periods, setPeriods }) {
         </div>
       )}
       <p className="text-xs text-slate-400 mt-3">
-        양수 = 저축 (자산에 더해짐), 음수 = 지출 (자산에서 빠짐). 겹치는 구간은
-        합산됩니다.
+        * 양수 = 저축, 음수 = 지출. 겹치는 구간은 합산됩니다.
       </p>
-      <p className="text-xs text-slate-400 mt-1">TODO:실질가치라는거 설명</p>
+      <p className="text-xs text-slate-400 mt-1">
+        * 입력 금액은 현재 가치 기준이며, 실제 입출금은 매년 물가 상승률을
+        반영해 계산됩니다.
+      </p>
     </div>
   );
 }
