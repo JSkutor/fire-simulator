@@ -159,7 +159,6 @@ export default function WealthChart({
                   name="명목 (은퇴 후)"
                   stroke="#f97316"
                   strokeWidth={2.5}
-                  strokeDasharray="6 4"
                   dot={false}
                   activeDot={{ r: 5 }}
                   connectNulls={false}
@@ -219,7 +218,7 @@ export default function WealthChart({
         ) : (
           <>
             <LegendDot color="#2563eb" label="명목 (은퇴 전)" />
-            <LegendDot color="#f97316" label="명목 (은퇴 후)" dashed />
+            <LegendDot color="#f97316" label="명목 (은퇴 후)" />
             <LegendDot color="#10b981" label="실질 (은퇴 전)" dashed />
             <LegendDot color="#eab308" label="실질 (은퇴 후)" dashed />
           </>
