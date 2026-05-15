@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
 export default function PeriodRow({ period, onChange, onRemove }) {
   const amount = Number(period.amount) || 0;
   const isSaving = amount > 0;
   const isSpending = amount < 0;
   const borderColor = isSaving
-    ? 'border-emerald-400'
+    ? "border-emerald-400"
     : isSpending
-    ? 'border-rose-400'
-    : 'border-slate-300';
+      ? "border-rose-400"
+      : "border-slate-300";
 
   return (
     <div className="flex flex-wrap items-center gap-2 py-2">
@@ -17,7 +17,17 @@ export default function PeriodRow({ period, onChange, onRemove }) {
         min="1"
         max="40"
         value={period.start}
-        onChange={(e) => onChange({ ...period, start: Number(e.target.value) })}
+        onChange={(e) =>
+          onChange({
+            ...period,
+            start: e.target.value === "" ? "" : Number(e.target.value),
+          })
+        }
+        onBlur={() => {
+          if (period.start === "") {
+            onChange({ ...period, start: 0 });
+          }
+        }}
         className="w-16 px-2 py-1.5 rounded border border-slate-300 text-sm text-center"
       />
       <span className="text-slate-400 text-sm">~</span>
@@ -25,7 +35,7 @@ export default function PeriodRow({ period, onChange, onRemove }) {
         type="number"
         min="1"
         max="40"
-        value={period.end}
+        value={period.end === 0 || period.end === "0" ? "" : period.end}
         onChange={(e) => onChange({ ...period, end: Number(e.target.value) })}
         className="w-16 px-2 py-1.5 rounded border border-slate-300 text-sm text-center"
       />
@@ -33,8 +43,12 @@ export default function PeriodRow({ period, onChange, onRemove }) {
 
       <input
         type="number"
-        value={period.amount}
-        onChange={(e) => onChange({ ...period, amount: Number(e.target.value) })}
+        value={
+          period.amount === 0 || period.amount === "0" ? "" : period.amount
+        }
+        onChange={(e) =>
+          onChange({ ...period, amount: Number(e.target.value) })
+        }
         className={`w-28 px-2 py-1.5 rounded border-2 text-sm text-right ${borderColor} focus:outline-none`}
       />
       <span className="text-slate-500 text-sm">만원/년</span>

@@ -1,4 +1,5 @@
 // 자산 시뮬레이션 계산
+// 로직 주석
 // base: 기초자산(원), rate: 수익률(%), periods: [{start,end,amount(만원)}], fireYear: number|null
 //
 // 시점 모델 (전부 "연초" 기준):
@@ -19,6 +20,7 @@
 export const YEARS = 40;
 export const INFLATION = 0.023;
 export const WITHDRAW_RATE = 0.04;
+const DEFAULT_BASE = 10000000;
 
 export function calcWealth(base, rate, periods, fireYear) {
   if (!Number.isFinite(base) || !Number.isFinite(rate)) return [];
@@ -28,7 +30,7 @@ export function calcWealth(base, rate, periods, fireYear) {
   const fireSet = Number.isFinite(fireYear) && fireYear >= 0;
 
   const arr = [];
-  let asset = base; // 0년차 연초 자산
+  let asset = base === 0 ? DEFAULT_BASE : base; // 0년차 연초 자산
 
   for (let y = 0; y <= YEARS; y++) {
     // asset = y년차 연초 자산

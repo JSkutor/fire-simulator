@@ -13,14 +13,15 @@ export default function InputCard({ base, setBase, rate, setRate }) {
           <input
             type="text"
             inputMode="numeric"
-            value={base.toLocaleString("ko-KR")}
+            value={base === 0 ? "" : base.toLocaleString("ko-KR")}
+            placeholder="10,000,000"
             onChange={(e) => {
               const raw = e.target.value.replace(/[^0-9]/g, "");
               setBase(raw ? Number(raw) : 0);
             }}
             className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           />
-          <p className="text-xs text-slate-400 mt-1">예) 300000000 = 3억원</p>
+          <p className="text-xs text-slate-400 mt-1">예) 30000000 = 3천만원</p>
         </div>
         <div>
           <label className="block text-xs text-slate-500 mb-1">
@@ -29,7 +30,8 @@ export default function InputCard({ base, setBase, rate, setRate }) {
           <input
             type="number"
             step="0.1"
-            value={rate}
+            value={rate === 0 || rate === "0" ? "" : rate}
+            placeholder="0"
             onChange={(e) => setRate(Number(e.target.value) || 0)}
             className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
           />

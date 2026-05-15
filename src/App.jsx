@@ -8,9 +8,9 @@ import { calcWealth, WITHDRAW_RATE } from "./utils/calc";
 import { fmtKRW, fmtManwon } from "./utils/format";
 
 export default function App() {
-  const [base, setBase] = useState(300000000);
+  const [base, setBase] = useState(30000000);
   const [rate, setRate] = useState(7);
-  const [periods, setPeriods] = useState([{ start: 1, end: 10, amount: 500 }]);
+  const [periods, setPeriods] = useState([{ start: 0, end: 20, amount: 1200 }]);
   const [fireYear, setFireYear] = useState(null);
   const [hoveredYear, setHoveredYear] = useState(0);
 
@@ -44,7 +44,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MetricCard
               title="명목 자산"
-              subtitle="그 시점 화폐 기준"
+              subtitle="미래 액면가 기준"
               value={fmtKRW(cur.nominal)}
               accent="blue"
             />
@@ -59,13 +59,34 @@ export default function App() {
 
         {/* 5. 월 현금흐름 지표 */}
         <section>
-          <h2 className="text-xs font-semibold text-slate-500 mb-2 ml-1">
-            월 인출액 (FIRE 이전은 실제 월 인출 없음) · {hoveredYear}년차
-          </h2>
+          {/* <h2 className="text-xs font-semibold text-slate-500 mb-2 ml-1"> 
+          월 인출액 (FIRE 이전은 실제 월 인출 없음) · {hoveredYear}년차
+          </h2> */}
+
+          <div className="flex items-center gap-2 mb-2 ml-1">
+            <h2 className="text-xs font-semibold text-slate-500 shrink-0">
+              월 인출액 · {hoveredYear}년차
+            </h2>
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-600 text-xs font-medium">
+              <svg
+                className="w-3 h-3 shrink-0"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              FIRE 이전 실제 인출 없음
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MetricCard
               title="명목 인출액"
-              subtitle="그 시점 화폐 기준"
+              subtitle="미래 액면가 기준"
               value={`월 ${fmtManwon(flowN)}`}
               accent="orange"
             />
