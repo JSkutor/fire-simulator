@@ -1,5 +1,6 @@
 import React from "react";
 import PeriodRow from "./PeriodRow";
+import { normalizePeriod } from "../utils/periodValidation";
 
 export default function PeriodTable({ periods, setPeriods }) {
   const updateRow = (idx, next) => {
@@ -11,10 +12,11 @@ export default function PeriodTable({ periods, setPeriods }) {
     setPeriods(periods.filter((_, i) => i !== idx));
   };
   const addRow = () => {
-    const last = periods[periods.length - 1];
-    const start = last ? Math.min(40, Number(last.end) + 1) : 0;
+    const normalizedPeriods = periods.map((period) => normalizePeriod(period));
+    const last = normalizedPeriods[normalizedPeriods.length - 1];
+    const start = last ? Math.min(40, last.end + 1) : 0;
     const end = Math.min(40, start + 4);
-    setPeriods([...periods, { start, end, amount: 0 }]);
+    setPeriods([...normalizedPeriods, { start, end, amount: 0 }]);
   };
 
   return (

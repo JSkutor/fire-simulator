@@ -1,43 +1,55 @@
 import React from "react";
+import {
+  hasInvalidYearRange,
+  normalizePeriod,
+  parseNumberInput,
+} from "../utils/periodValidation";
 
 export default function PeriodRow({ period, onChange, onRemove }) {
   const amount = Number(period.amount) || 0;
   const isSaving = amount > 0;
   const isSpending = amount < 0;
+  const isRangeInvalid = hasInvalidYearRange(period);
   const borderColor = isSaving
     ? "border-emerald-400"
     : isSpending
       ? "border-rose-400"
       : "border-slate-300";
+  const yearInputClass = `w-16 px-2 py-1.5 rounded border text-sm text-center ${
+    isRangeInvalid ? "border-rose-400 bg-rose-50" : "border-slate-300"
+  }`;
 
   return (
     <div className="flex flex-wrap items-center gap-2 py-2">
       <input
         type="number"
-        min="1"
+        min="0"
         max="40"
+        step="1"
+        aria-label="시작 년차"
         value={period.start}
         onChange={(e) =>
           onChange({
             ...period,
-            start: e.target.value === "" ? "" : Number(e.target.value),
+            start: parseNumberInput(e.target.value),
           })
         }
-        onBlur={() => {
-          if (period.start === "") {
-            onChange({ ...period, start: 0 });
-          }
-        }}
-        className="w-16 px-2 py-1.5 rounded border border-slate-300 text-sm text-center"
+        onBlur={() => onChange(normalizePeriod(period, "start"))}
+        className={yearInputClass}
       />
       <span className="text-slate-400 text-sm">~</span>
       <input
         type="number"
-        min="1"
+        min="0"
         max="40"
-        value={period.end === 0 || period.end === "0" ? "" : period.end}
-        onChange={(e) => onChange({ ...period, end: Number(e.target.value) })}
-        className="w-16 px-2 py-1.5 rounded border border-slate-300 text-sm text-center"
+        step="1"
+        aria-label="종료 년차"
+        value={period.end}
+        onChange={(e) =>
+          onChange({ ...period, end: parseNumberInput(e.target.value) })
+        }
+        onBlur={() => onChange(normalizePeriod(period, "end"))}
+        className={yearInputClass}
       />
       <span className="text-slate-400 text-sm ml-1">년차</span>
 
@@ -47,8 +59,10 @@ export default function PeriodRow({ period, onChange, onRemove }) {
           period.amount === 0 || period.amount === "0" ? "" : period.amount
         }
         onChange={(e) =>
-          onChange({ ...period, amount: Number(e.target.value) })
+          onChange({ ...period, amount: parseNumberInput(e.target.value) })
         }
+        onBlur={() => onChange(normalizePeriod(period))}
+        aria-label="연간 저축 또는 지출 금액"
         className={`w-28 px-2 py-1.5 rounded border-2 text-sm text-right ${borderColor} focus:outline-none`}
       />
       <span className="text-slate-500 text-sm">만원/년</span>
