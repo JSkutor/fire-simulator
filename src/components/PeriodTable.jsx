@@ -20,14 +20,15 @@ export default function PeriodTable({ periods, setPeriods }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+      <div className="flex items-center justify-between gap-3 mb-3">
         <h2 className="text-sm font-semibold text-slate-500">
           저축 / 지출 구간
         </h2>
         <button
+          type="button"
           onClick={addRow}
-          className="px-3 py-1.5 text-sm font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-700 transition"
+          className="shrink-0 rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700 sm:py-1.5"
         >
           + 구간 추가
         </button>
@@ -49,10 +50,10 @@ export default function PeriodTable({ periods, setPeriods }) {
           ))}
         </div>
       )}
-      <p className="text-xs text-slate-400 mt-3">
+      <p className="text-xs leading-relaxed text-slate-400 mt-3">
         * 양수 = 저축, 음수 = 지출. 겹치는 구간은 합산됩니다.
       </p>
-      <p className="text-xs text-slate-400 mt-1">
+      <p className="text-xs leading-relaxed text-slate-400 mt-1">
         * 입력 금액은 현재 가치 기준이며, 실제 입출금은 매년 물가 상승률을
         반영해 계산됩니다.
       </p>

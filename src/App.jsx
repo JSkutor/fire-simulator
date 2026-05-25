@@ -35,13 +35,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-5xl mx-auto p-4 md:p-8 space-y-6">
+      <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-8 space-y-4 md:space-y-6">
         {/* 헤더 */}
-        <header className="pt-2">
+        <header className="pt-2 px-1">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
             경제적 자립, 언제?
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm leading-relaxed text-slate-500 mt-1">
             복리의 마법과 마르지 않는 현금흐름 시뮬레이션
           </p>
         </header>
@@ -51,7 +51,7 @@ export default function App() {
           <h2 className="text-xs font-semibold text-slate-500 mb-2 ml-1">
             자산 규모 · {hoveredYear}년차
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <MetricCard
               title="명목 자산"
               subtitle="미래 액면가 기준"
@@ -75,7 +75,7 @@ export default function App() {
           월 인출액 (FIRE 이전은 실제 월 인출 없음) · {hoveredYear}년차
           </h2> */}
 
-          <div className="flex items-center gap-2 mb-2 ml-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2 ml-1">
             <h2 className="text-xs font-semibold text-slate-500 shrink-0">
               월 인출액 · {hoveredYear}년차
             </h2>
@@ -99,7 +99,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <MetricCard
               title="명목 인출액"
               subtitle="미래 액면가 기준"

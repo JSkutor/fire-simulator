@@ -18,7 +18,7 @@ export default function ChartTooltip({ active, payload, fireYear }) {
   else hint = "클릭 → FIRE 시점 변경";
 
   return (
-    <div className="bg-white/95 backdrop-blur border border-slate-200 rounded-xl shadow-lg p-3 text-xs min-w-[220px]">
+    <div className="min-w-[200px] max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white/95 p-3 text-xs shadow-lg backdrop-blur sm:min-w-[220px]">
       <div className="flex items-center justify-between mb-2">
         <span className="font-bold text-slate-900 text-sm">{p.year}년차</span>
         {isFire && (

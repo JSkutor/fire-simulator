@@ -28,24 +28,24 @@ export default function MetricCard({
   }, [value]);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <div className="flex items-baseline justify-between mb-1">
+    <div className="min-w-0 bg-white rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+      <div className="flex min-w-0 items-baseline justify-between gap-2 mb-1">
         {/* 타이틀과 서브타이틀도 전체적인 톤을 맞추기 위해 살짝 흐리게 처리합니다 */}
         <span
-          className={`text-xs font-semibold transition-colors duration-300 ${isProjected ? "text-slate-400" : "text-slate-500"}`}
+          className={`min-w-0 text-xs font-semibold transition-colors duration-300 ${isProjected ? "text-slate-400" : "text-slate-500"}`}
         >
           {title}
         </span>
         {subtitle && (
           <span
-            className={`text-[11px] transition-colors duration-300 ${isProjected ? "text-slate-300" : "text-slate-400"}`}
+            className={`hidden shrink-0 text-[11px] transition-colors duration-300 sm:inline ${isProjected ? "text-slate-300" : "text-slate-400"}`}
           >
             {subtitle}
           </span>
         )}
       </div>
       <div
-        className={`text-2xl font-bold tabular-nums transition-colors duration-300 ${textColors[accent] || textColors.slate}`}
+        className={`break-keep text-lg font-bold leading-tight tabular-nums transition-colors duration-300 sm:text-2xl ${textColors[accent] || textColors.slate}`}
       >
         <CountUp
           start={prevValueRef.current}
