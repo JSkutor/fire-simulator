@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import InputCard from "./components/InputCard";
 import PeriodTable from "./components/PeriodTable";
 import FireBanner from "./components/FireBanner";
@@ -6,6 +6,7 @@ import MetricCard from "./components/MetricCard";
 import WealthChart from "./components/WealthChart";
 import { calcWealth, WITHDRAW_RATE } from "./utils/calc";
 import { fmtKRW, fmtManwon } from "./utils/format";
+import { decodeParamsToState, copyShareURL } from "./utils/urlShare";
 import AnimationTestBoard from "./components/AnimationTestBoard";
 
 export default function App() {
@@ -14,6 +15,31 @@ export default function App() {
   const [periods, setPeriods] = useState([{ start: 0, end: 20, amount: 1200 }]);
   const [fireYear, setFireYear] = useState(null);
   const [hoveredYear, setHoveredYear] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const timerRef = useRef(null);
+
+  // 마운트 시 URL 파라미터에서 상태 복원
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (Array.from(params.keys()).length > 0) {
+      const restored = decodeParamsToState(params);
+      setBase(restored.base);
+
+      setRate(restored.rate);
+      setPeriods(restored.periods);
+      if (restored.fireYear != null) setFireYear(restored.fireYear);
+    }
+  }, []);
+
+  // 공유 버튼 핸들러
+  const handleShare = async () => {
+    const ok = await copyShareURL(base, rate, periods, fireYear);
+    if (ok) {
+      setCopied(true);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   const data = useMemo(
     () => calcWealth(base, rate, periods, fireYear),
@@ -38,12 +64,58 @@ export default function App() {
       <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-8 space-y-4 md:space-y-6">
         {/* 헤더 */}
         <header className="pt-2 px-1">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
-            경제적 자립, 언제?
-          </h1>
-          <p className="text-sm leading-relaxed text-slate-500 mt-1">
-            복리의 마법과 마르지 않는 현금흐름 시뮬레이션
-          </p>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+                경제적 자립, 언제?
+              </h1>
+              <p className="text-sm leading-relaxed text-slate-500 mt-1">
+                복리의 마법과 마르지 않는 현금흐름 시뮬레이션
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleShare}
+              className="shrink-0 mt-1 flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 active:scale-95 sm:py-1.5"
+              title="현재 설정을 URL로 공유"
+            >
+              {copied ? (
+                <>
+                  <svg
+                    className="w-3.5 h-3.5 text-emerald-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    />
+                  </svg>
+                  <span className="text-emerald-600">복사됨!</span>
+                </>
+              ) : (
+                <>
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+                    />
+                  </svg>
+                  <span>입력값 공유</span>
+                </>
+              )}
+            </button>
+          </div>
         </header>
 
         {/* 4. 자산 규모 지표 */}
