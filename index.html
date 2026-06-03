@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
     <title>경제적 자립, 언제?</title>
     <meta
       name="description"
-      content="기초자산과 수익률을 입력하면 복리 성장 곡선을 즉시 확인할 수 있는 FIRE 시뮬레이터. 저축·지출 구간을 자유롭게 설정하고, 그래프를 클릭해 FIRE 시점을 지정하면 4% 인출 후 자산 변화를 한눈에 볼 수 있습니다. 인플레이션을 반영한 실질 자산도 함께 표시됩니다."
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
     />
     <link rel="canonical" href="https://jskutor.github.io/fire-simulator/" />
 
@@ -15,7 +16,7 @@
     <meta name="twitter:title" content="경제적 자립, 언제?" />
     <meta
       name="twitter:description"
-      content="저축·지출 구간과 수익률을 입력해 FIRE 시점을 확인하는 복리 자산 시뮬레이터."
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
     />
     <meta
       name="twitter:image"
@@ -26,7 +27,7 @@
     <meta property="og:title" content="경제적 자립, 언제?" />
     <meta
       property="og:description"
-      content="저축·지출 구간과 수익률을 입력해 FIRE 시점과 인플레이션 반영 자산 흐름을 확인하는 복리 자산 시뮬레이터."
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
     />
     <meta
       property="og:image"
@@ -58,7 +59,7 @@
         "@type": "WebApplication",
         "name": "경제적 자립, 언제?",
         "url": "https://jskutor.github.io/fire-simulator/",
-        "description": "기초자산과 수익률을 입력하면 복리 성장 곡선을 즉시 확인할 수 있는 FIRE 시뮬레이터. 저축·지출 구간을 자유롭게 설정하고, 그래프를 클릭해 FIRE 시점을 지정하면 4% 인출 후 자산 변화를 한눈에 볼 수 있습니다.",
+        "description": "FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
@@ -72,6 +73,28 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div
+        style="
+          text-align: center;
+          padding: 40px;
+          max-width: 600px;
+          margin: 0 auto;
+          font-family: sans-serif;
+        "
+      >
+        <h1 style="font-size: 1.5rem; margin-bottom: 8px">
+          경제적 자립, 언제?
+        </h1>
+        <p style="font-size: 1rem; color: #475569; margin-bottom: 4px">
+          FIRE 시뮬레이터 — 저축·지출 구간과 수익률을 설정해 경제적 자립 시점을
+          예측해 보세요.
+        </p>
+        <p style="font-size: 0.875rem; color: #94a3b8">
+          이 사이트는 JavaScript가 필요합니다.
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
