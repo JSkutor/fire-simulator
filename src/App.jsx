@@ -121,7 +121,7 @@ export default function App() {
         {/* 4. 자산 규모 지표 */}
         <section>
           <h2 className="text-xs font-semibold text-slate-500 mb-2 ml-1">
-            자산 규모 · {hoveredYear}년차
+            자산 시뮬레이션 · {hoveredYear}년차
           </h2>
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <MetricCard
@@ -149,7 +149,7 @@ export default function App() {
 
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2 ml-1">
             <h2 className="text-xs font-semibold text-slate-500 shrink-0">
-              월 인출액 · {hoveredYear}년차
+              월 현금흐름 예측 · {hoveredYear}년차
             </h2>
             <div className="flex items-center gap-1 text-slate-400 text-[11px]">
               <svg
