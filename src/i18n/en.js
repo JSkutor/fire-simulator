@@ -4,8 +4,8 @@ export default {
   currency: "USD",
 
   // Header
-  title: "When Will You Be Financially Free?",
-  subtitle: "Simulate compound growth and sustainable withdrawal cash flows",
+  title: "Financial Independence: When?",
+  subtitle: "Compounding magic and endless cash flow simulation",
   shareBtn: "Share",
   copied: "Copied!",
   shareTitle: "Share your current settings via URL",
