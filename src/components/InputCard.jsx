@@ -1,20 +1,28 @@
 import React from "react";
-import { INFLATION } from "../utils/calc";
 
-export default function InputCard({ base, setBase, rate, setRate }) {
+export default function InputCard({ base, setBase, rate, setRate, locale }) {
+  const { t, isEn, inflation } = locale;
+
+  const formatInputValue = (val) => {
+    if (val === 0) return "";
+    return isEn
+      ? val.toLocaleString("en-US")
+      : val.toLocaleString("ko-KR");
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
-      <h2 className="text-sm font-semibold text-slate-500 mb-4">기본 입력</h2>
+      <h2 className="text-sm font-semibold text-slate-500 mb-4">{t.inputTitle}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs text-slate-500 mb-1">
-            기초자산 (원)
+            {t.baseAssetLabel}
           </label>
           <input
             type="text"
             inputMode="numeric"
-            value={base === 0 ? "" : base.toLocaleString("ko-KR")}
-            placeholder="10,000,000"
+            value={formatInputValue(base)}
+            placeholder={t.baseAssetPlaceholder}
             onChange={(e) => {
               const raw = e.target.value.replace(/[^0-9]/g, "");
               setBase(raw ? Number(raw) : 0);
@@ -22,12 +30,12 @@ export default function InputCard({ base, setBase, rate, setRate }) {
             className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:py-2 sm:text-sm"
           />
           <p className="text-xs leading-relaxed text-slate-400 mt-1">
-            예) 30000000 = 3천만원
+            {t.baseAssetHint}
           </p>
         </div>
         <div>
           <label className="block text-xs text-slate-500 mb-1">
-            연간 전체자산 수익률 (%)
+            {t.rateLabel}
           </label>
           <input
             type="number"
@@ -38,7 +46,7 @@ export default function InputCard({ base, setBase, rate, setRate }) {
             className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:py-2 sm:text-sm"
           />
           <p className="text-xs leading-relaxed text-slate-400 mt-1">
-            인플레이션 {(INFLATION * 100).toFixed(1)}% 고정
+            {t.inflationHint((inflation * 100).toFixed(1))}
           </p>
         </div>
       </div>

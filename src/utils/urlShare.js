@@ -31,13 +31,21 @@ export function encodeStateToParams(base, rate, periods, fireYear) {
 
 /**
  * URLSearchParams에서 상태를 디코딩
+ * @param {URLSearchParams} searchParams
+ * @param {object} [defaults] - 로케일 기본값
  * @returns {{ base, rate, periods, fireYear }}
  */
-export function decodeParamsToState(searchParams) {
+export function decodeParamsToState(searchParams, defaults) {
+  const d = defaults || {
+    base: 30000000,
+    rate: 7,
+    periods: [{ start: 0, end: 20, amount: 1200 }],
+  };
+
   const result = {
-    base: 30000000, // 기본값
-    rate: 7, // 기본값
-    periods: [{ start: 0, end: 20, amount: 1200 }], // 기본값
+    base: d.base,
+    rate: d.rate,
+    periods: d.periods,
     fireYear: null,
   };
 

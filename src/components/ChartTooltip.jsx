@@ -1,9 +1,9 @@
 import React from "react";
-import { fmtKRW, fmtManwon } from "../utils/format";
 import { WITHDRAW_RATE } from "../utils/calc";
 
-export default function ChartTooltip({ active, payload, fireYear }) {
+export default function ChartTooltip({ active, payload, fireYear, locale, fmt }) {
   if (!active || !payload || !payload.length) return null;
+  const { t } = locale;
   const p = payload[0].payload;
 
   const fireSet = Number.isFinite(fireYear) && fireYear >= 0;
@@ -13,35 +13,35 @@ export default function ChartTooltip({ active, payload, fireYear }) {
   const flowMonthR = (p.real * WITHDRAW_RATE) / 12;
 
   let hint;
-  if (!fireSet) hint = "클릭 → FIRE 시점 설정";
-  else if (isFire) hint = "클릭 → FIRE 시점 해제";
-  else hint = "클릭 → FIRE 시점 변경";
+  if (!fireSet) hint = t.tooltipHintSet;
+  else if (isFire) hint = t.tooltipHintClear;
+  else hint = t.tooltipHintChange;
 
   return (
     <div className="min-w-[200px] max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white/95 p-3 text-xs shadow-lg backdrop-blur sm:min-w-[220px]">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-bold text-slate-900 text-sm">{p.year}년차</span>
+        <span className="font-bold text-slate-900 text-sm">{t.tooltipYear(p.year)}</span>
         {isFire && (
           <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-semibold text-[10px]">
-            🔥 FIRE 시점
+            {t.tooltipFireBadge}
           </span>
         )}
         {!isFire && isAfter && (
           <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-semibold text-[10px]">
-            은퇴 후
+            {t.tooltipAfterFire}
           </span>
         )}
       </div>
 
       <div className="space-y-1">
         <Row
-          label="명목 자산"
-          value={fmtKRW(p.nominal)}
+          label={t.tooltipNominal}
+          value={fmt.fmtValue(p.nominal)}
           color="text-blue-600"
         />
         <Row
-          label="실질 자산"
-          value={fmtKRW(p.real)}
+          label={t.tooltipReal}
+          value={fmt.fmtValue(p.real)}
           color="text-emerald-600"
         />
       </div>
@@ -50,13 +50,13 @@ export default function ChartTooltip({ active, payload, fireYear }) {
 
       <div className="space-y-1">
         <Row
-          label={isAfter ? "명목 인출액" : "명목 예상 인출액"}
-          value={`월 ${fmtManwon(flowMonthN)}`}
+          label={isAfter ? t.tooltipNominalWithdraw : t.tooltipNominalWithdrawProjected}
+          value={fmt.fmtMonthly(flowMonthN)}
           color="text-slate-700"
         />
         <Row
-          label={isAfter ? "실질 인출액" : "실질 예상 인출액"}
-          value={`월 ${fmtManwon(flowMonthR)}`}
+          label={isAfter ? t.tooltipRealWithdraw : t.tooltipRealWithdrawProjected}
+          value={fmt.fmtMonthly(flowMonthR)}
           color="text-slate-700"
         />
       </div>
@@ -65,15 +65,15 @@ export default function ChartTooltip({ active, payload, fireYear }) {
 
       {p.flow !== 0 && (
         <Row
-          label="저축/지출"
-          value={fmtManwon(p.flow, true)}
+          label={t.tooltipFlow}
+          value={fmt.fmtFlow(p.flow, true)}
           color={p.flow > 0 ? "text-emerald-600" : "text-rose-600"}
         />
       )}
       {isAfter && (
         <Row
-          label="4% 연간 인출"
-          value={`-${fmtManwon(p.withdrawal)}`}
+          label={t.tooltipAnnualWithdraw}
+          value={`-${fmt.fmtFlow(p.withdrawal)}`}
           color="text-orange-600"
         />
       )}

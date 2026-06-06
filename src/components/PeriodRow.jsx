@@ -5,7 +5,8 @@ import {
   parseNumberInput,
 } from "../utils/periodValidation";
 
-export default function PeriodRow({ period, onChange, onRemove }) {
+export default function PeriodRow({ period, onChange, onRemove, locale }) {
+  const { t } = locale;
   const amount = Number(period.amount) || 0;
   const isSaving = amount > 0;
   const isSpending = amount < 0;
@@ -26,7 +27,7 @@ export default function PeriodRow({ period, onChange, onRemove }) {
         min="0"
         max="40"
         step="1"
-        aria-label="시작 년차"
+        aria-label={t.yearStart}
         value={period.start}
         onChange={(e) =>
           onChange({
@@ -43,7 +44,7 @@ export default function PeriodRow({ period, onChange, onRemove }) {
         min="0"
         max="40"
         step="1"
-        aria-label="종료 년차"
+        aria-label={t.yearEnd}
         value={period.end}
         onChange={(e) =>
           onChange({ ...period, end: parseNumberInput(e.target.value) })
@@ -51,13 +52,13 @@ export default function PeriodRow({ period, onChange, onRemove }) {
         onBlur={() => onChange(normalizePeriod(period, "end"))}
         className={yearInputClass}
       />
-      <span className="text-slate-400 text-sm sm:ml-1">년차</span>
+      <span className="text-slate-400 text-sm sm:ml-1">{t.yearUnit}</span>
 
       <button
         type="button"
         onClick={onRemove}
         className="flex h-8 w-8 items-center justify-center justify-self-end rounded-full text-lg leading-none text-slate-400 transition hover:bg-rose-50 hover:text-rose-500 sm:order-last sm:ml-auto sm:h-7 sm:w-7 sm:text-base"
-        aria-label="구간 삭제"
+        aria-label={t.periodRemove}
       >
         ×
       </button>
@@ -72,19 +73,19 @@ export default function PeriodRow({ period, onChange, onRemove }) {
             onChange({ ...period, amount: parseNumberInput(e.target.value) })
           }
           onBlur={() => onChange(normalizePeriod(period))}
-          aria-label="연간 저축 또는 지출 금액"
+          aria-label={t.amountLabel}
           className={`min-w-0 flex-1 rounded border-2 px-2 py-2 text-right text-base sm:w-28 sm:flex-none sm:py-1.5 sm:text-sm ${borderColor} focus:outline-none`}
         />
-        <span className="shrink-0 text-sm text-slate-500">만원/년</span>
+        <span className="shrink-0 text-sm text-slate-500">{t.amountUnit}</span>
 
         {isSaving && (
           <span className="ml-auto rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 sm:ml-1">
-            저축
+            {t.savingBadge}
           </span>
         )}
         {isSpending && (
           <span className="ml-auto rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-700 sm:ml-1">
-            지출
+            {t.spendingBadge}
           </span>
         )}
       </div>

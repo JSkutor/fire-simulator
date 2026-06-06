@@ -10,7 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ChartTooltip from "./ChartTooltip";
-import { fmtAxis } from "../utils/format";
 import { YEARS } from "../utils/calc";
 
 export default function WealthChart({
@@ -19,7 +18,10 @@ export default function WealthChart({
   hoveredYear,
   setHoveredYear,
   setFireYear,
+  locale,
+  fmt,
 }) {
+  const { t } = locale;
   const isMobile = useMediaQuery("(max-width: 767px)");
   const yearProgress = (hoveredYear / YEARS) * 100;
   const xTicks = isMobile
@@ -88,12 +90,12 @@ export default function WealthChart({
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
       <div className="flex items-center justify-between gap-3 mb-3">
-        <h2 className="text-sm font-semibold text-slate-500">자산 성장 곡선</h2>
+        <h2 className="text-sm font-semibold text-slate-500">{t.chartTitle}</h2>
         <span className="hidden text-xs text-slate-400 md:inline">
-          그래프를 클릭해 FIRE 시점을 지정하세요
+          {t.chartGuide}
         </span>
         <span className="text-xs font-medium text-slate-400 md:hidden">
-          {hoveredYear}년차 선택
+          {t.chartMobileYear(hoveredYear)}
         </span>
       </div>
 
@@ -119,7 +121,7 @@ export default function WealthChart({
               ticks={xTicks}
               tick={{ fontSize: axisFontSize, fill: "#64748b" }}
               label={{
-                value: "년차",
+                value: t.chartXLabel,
                 position: "insideBottomRight",
                 offset: -5,
                 fill: "#94a3b8",
@@ -127,12 +129,12 @@ export default function WealthChart({
               }}
             />
             <YAxis
-              tickFormatter={fmtAxis}
+              tickFormatter={fmt.fmtAxis}
               tick={{ fontSize: axisFontSize, fill: "#64748b" }}
               width={yAxisWidth}
             />
             <Tooltip
-              content={<ChartTooltip fireYear={fireYear} />}
+              content={<ChartTooltip fireYear={fireYear} locale={locale} fmt={fmt} />}
               cursor={{ stroke: "#94a3b8", strokeDasharray: "3 3" }}
               // fire 배지 잘림 이슈로 밑에 추가.
               allowEscapeViewBox={{ x: false, y: true }}
@@ -149,7 +151,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="nominalPre"
-                  name="명목 자산"
+                  name={t.legendNominal}
                   stroke="#2563eb"
                   strokeWidth={isMobile ? 2 : 2.5}
                   dot={false}
@@ -159,7 +161,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="realPre"
-                  name="실질 자산"
+                  name={t.legendReal}
                   stroke="#10b981"
                   strokeWidth={2}
                   strokeDasharray="5 4"
@@ -173,7 +175,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="nominalPre"
-                  name="명목 (은퇴 전)"
+                  name={t.legendNominalPre}
                   stroke="#2563eb"
                   strokeWidth={isMobile ? 2 : 2.5}
                   dot={false}
@@ -184,7 +186,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="nominalPost"
-                  name="명목 (은퇴 후)"
+                  name={t.legendNominalPost}
                   stroke="#f97316"
                   strokeWidth={isMobile ? 2 : 2.5}
                   dot={false}
@@ -195,7 +197,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="realPre"
-                  name="실질 (은퇴 전)"
+                  name={t.legendRealPre}
                   stroke="#10b981"
                   strokeWidth={2}
                   strokeDasharray="5 4"
@@ -207,7 +209,7 @@ export default function WealthChart({
                 <Line
                   type="monotone"
                   dataKey="realPost"
-                  name="실질 (은퇴 후)"
+                  name={t.legendRealPost}
                   stroke="#eab308"
                   strokeWidth={2}
                   strokeDasharray="3 3"
@@ -247,10 +249,10 @@ export default function WealthChart({
       <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 md:hidden">
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs font-semibold text-slate-500">
-            선택 연도
+            {t.mobileSelectYear}
           </span>
           <span className="text-sm font-bold tabular-nums text-slate-900">
-            {hoveredYear}년차
+            {t.mobileYearDisplay(hoveredYear)}
           </span>
         </div>
         <input
@@ -260,8 +262,8 @@ export default function WealthChart({
           step="1"
           value={hoveredYear}
           onChange={(e) => setHoveredYear(Number(e.target.value))}
-          aria-label="선택 연도"
-          aria-valuetext={`${hoveredYear}년차`}
+          aria-label={t.mobileSliderLabel}
+          aria-valuetext={t.mobileSliderValueText(hoveredYear)}
           className="year-slider mt-3 w-full"
           style={{ "--year-progress": `${yearProgress}%` }}
         />
@@ -285,10 +287,10 @@ export default function WealthChart({
           }`}
         >
           {hoveredYear === 0
-            ? "0년차는 지정 불가"
+            ? t.mobileFireBtnDisabled
             : fireYear === hoveredYear
-              ? "FIRE 해제"
-              : "이 연도를 FIRE로 지정"}
+              ? t.mobileFireBtnClear
+              : t.mobileFireBtnSet}
         </button>
       </div>
 
@@ -296,26 +298,24 @@ export default function WealthChart({
       <div className="flex flex-wrap gap-x-4 gap-y-2 mt-4 text-xs">
         {fireYear === null ? (
           <>
-            <LegendDot color="#2563eb" label="명목 자산" />
-            <LegendDot color="#10b981" label="실질 자산" dashed />
+            <LegendDot color="#2563eb" label={t.legendNominal} />
+            <LegendDot color="#10b981" label={t.legendReal} dashed />
           </>
         ) : (
           <>
-            <LegendDot color="#2563eb" label="명목 (은퇴 전)" />
-            <LegendDot color="#f97316" label="명목 (은퇴 후)" />
-            <LegendDot color="#10b981" label="실질 (은퇴 전)" dashed />
-            <LegendDot color="#eab308" label="실질 (은퇴 후)" dashed />
+            <LegendDot color="#2563eb" label={t.legendNominalPre} />
+            <LegendDot color="#f97316" label={t.legendNominalPost} />
+            <LegendDot color="#10b981" label={t.legendRealPre} dashed />
+            <LegendDot color="#eab308" label={t.legendRealPost} dashed />
           </>
         )}
       </div>
 
       <p className="text-xs leading-relaxed text-slate-400 mt-3">
-        * 명목 가치는 숫자 그대로의 금액, 실질 가치는 물가 상승을 반영해 현재
-        구매력으로 환산한 금액입니다.
+        {t.chartNote1}
       </p>
       <p className="text-xs leading-relaxed text-slate-400 mt-2">
-        * 인플레이션 2.3% = 한국 CPI 연평균 (2005~2024년, 통계청·World Bank
-        기준)
+        {t.chartNote2}
       </p>
     </div>
   );
