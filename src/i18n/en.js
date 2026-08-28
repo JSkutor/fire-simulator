@@ -69,7 +69,13 @@ export default {
   baseAssetPlaceholder: "30,000",
   baseAssetHint: "e.g. 30000 = $30K",
   rateLabel: "Annual Return (%)",
-  inflationHint: (pct) => `Inflation fixed at ${pct}%`,
+  inflationLabel: "Assumed Inflation Rate (%)",
+  inflationHint: (pct) => `Inflation ${pct}%`,
+  inflationPresets: {
+    target: "Fed Target (2.0%)",
+    avg: "Long-term Avg (2.5%)",
+    high: "High Inflation (3.5%)",
+  },
 
   // PeriodTable
   periodTitle: "Savings & Spending Periods",

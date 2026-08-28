@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finanzielle Freiheit: Wann? — FIRE Rechner & Cashflow Simulator</title>
+    <meta
+      name="description"
+      content="Interaktiver FIRE Rechner: Berechnen Sie Zinseszins-Vermögenswachstum, dynamische 4%-Entnahmeregel und den genauen Zeitpunkt für Ihre finanzielle Unabhängigkeit."
+    />
+    <link rel="canonical" href="https://whencanifire.vercel.app/de/" />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="en" href="https://whencanifire.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://whencanifire.vercel.app/ko/" />
+    <link rel="alternate" hreflang="ja" href="https://whencanifire.vercel.app/ja/" />
+    <link rel="alternate" hreflang="de" href="https://whencanifire.vercel.app/de/" />
+    <link rel="alternate" hreflang="es" href="https://whencanifire.vercel.app/es/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://whencanifire.vercel.app/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://whencanifire.vercel.app/fr/" />
+    <link rel="alternate" hreflang="x-default" href="https://whencanifire.vercel.app/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Finanzielle Freiheit: Wann? — FIRE Rechner" />
+    <meta name="twitter:description" content="Zinseszins & nachhaltiger Cashflow-Simulator für FIRE." />
+    <meta name="twitter:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Finanzielle Freiheit: Wann? — FIRE Rechner" />
+    <meta property="og:description" content="Interaktiver FIRE Rechner für Zinseszins, 4%-Regel und monatlichen Cashflow." />
+    <meta property="og:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+    <meta property="og:url" content="https://whencanifire.vercel.app/de/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="WhenCanIFIRE" />
+
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Finanzielle Freiheit: Wann? — FIRE Rechner",
+        "url": "https://whencanifire.vercel.app/de/",
+        "description": "Zinseszins & nachhaltiger Cashflow-Simulator für die FIRE-Bewegung.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "de",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Ist dieser Simulator ein historischer Backtest-Rechner?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nein. Statt vergangene Börsenzyklen statistisch auszuwerten, berechnet dieses Tool einen deterministischen Vorwärts-Cashflow über 40 Jahre basierend auf Ihren persönlichen Rendite-, Spar- und Inflationsannahmen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie wird der monatliche Entnahmebetrag berechnet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ab dem gewählten FIRE-Jahr werden zu Jahresbeginn 4% des Depotbestands für Lebenshaltungskosten entnommen. Geteilt durch 12 ergibt sich der monatliche Nominalbetrag sowie der inflationsbereinigte reale Wert."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was ist der Unterschied zwischen realem und nominalem Vermögen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nominal ist der reine Ziffernbetrag auf dem Konto. Real ist der inflationsbereinigte Wert, der zeigt, was Sie sich im Vergleich zu heute tatsächlich leisten können."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie werden Spar- und Ausgabephasen verzinst?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Die Phasen-Beträge werden jährlich um die Inflation erhöht. Für die unterjährige Verzinsung kontinuierlicher Zahlungsströme nutzt der Simulator die Formel flow * sqrt(1 + r)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Werden meine Finanzdaten auf Servern gespeichert?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nein. Alle Berechnungen laufen zu 100% lokal in Ihrem Browser."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: sans-serif;">
+        <h2>Finanzielle Freiheit: Wann? — FIRE Rechner</h2>
+        <p>Bitte aktivieren Sie JavaScript, um diesen Simulator zu nutzen.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

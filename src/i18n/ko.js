@@ -69,7 +69,13 @@ export default {
   baseAssetPlaceholder: "10,000,000",
   baseAssetHint: "예) 30000000 = 3천만원",
   rateLabel: "연간 전체자산 수익률 (%)",
-  inflationHint: (pct) => `인플레이션 ${pct}% 고정`,
+  inflationLabel: "예상 물가상승률(인플레이션) (%)",
+  inflationHint: (pct) => `인플레이션 ${pct}%`,
+  inflationPresets: {
+    target: "한은 목표 (2.0%)",
+    avg: "20년 평균 (2.3%)",
+    high: "고물가 시나리오 (3.5%)",
+  },
 
   // PeriodTable
   periodTitle: "저축 / 지출 구간",

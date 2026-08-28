@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indépendance Financière : Quand ? — Simulateur FIRE & Intérêts Composés</title>
+    <meta
+      name="description"
+      content="Simulateur FIRE interactif : Visualisez la croissance patrimoniale par intérêts composés, la règle des 4% et l'horizon de votre liberté financière."
+    />
+    <link rel="canonical" href="https://whencanifire.vercel.app/fr/" />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="en" href="https://whencanifire.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://whencanifire.vercel.app/ko/" />
+    <link rel="alternate" hreflang="ja" href="https://whencanifire.vercel.app/ja/" />
+    <link rel="alternate" hreflang="de" href="https://whencanifire.vercel.app/de/" />
+    <link rel="alternate" hreflang="es" href="https://whencanifire.vercel.app/es/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://whencanifire.vercel.app/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://whencanifire.vercel.app/fr/" />
+    <link rel="alternate" hreflang="x-default" href="https://whencanifire.vercel.app/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Indépendance Financière : Quand ? — Simulateur FIRE" />
+    <meta name="twitter:description" content="Intérêts composés et simulateur de flux de trésorerie pour le mouvement FIRE." />
+    <meta name="twitter:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Indépendance Financière : Quand ? — Simulateur FIRE" />
+    <meta property="og:description" content="Simulateur d'intérêts composés et de rente mensuelle pour la retraite anticipée." />
+    <meta property="og:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+    <meta property="og:url" content="https://whencanifire.vercel.app/fr/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="WhenCanIFIRE" />
+
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Indépendance Financière : Quand ? — Simulateur FIRE",
+        "url": "https://whencanifire.vercel.app/fr/",
+        "description": "Intérêts composés et simulateur de flux de trésorerie pour le mouvement FIRE.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "fr",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Ce simulateur est-il un simple outil de backtest historique ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Non. C'est un simulateur de flux de trésorerie sur 40 ans qui projette votre patrimoine et votre rente mensuelle en fonction de vos propres prévisions de rendement et d'inflation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Comment est calculée la rente mensuelle après FIRE ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "À partir de l'année FIRE choisie, 4% du solde de début d'année est prélevé pour financer vos dépenses. Ce montant est divisé par 12 pour afficher la rente mensuelle brute et son équivalent en pouvoir d'achat réel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quelle est la différence entre patrimoine réel et nominal ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le nominal est le montant chiffré sur votre compte ; le réel déduit l'inflation cumulée pour refléter ce que vous pourrez concrètement acheter en prix d'aujourd'hui."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Comment sont capitalisées les phases d'épargne et de dépenses ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Les montants sont ajustés chaque année selon l'inflation. Pour refléter des flux continus, le simulateur applique une capitalisation à mi-période flux * sqrt(1 + r)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mes données financières sont-elles envoyées sur un serveur ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolument pas. 100% des calculs s'exécutent localement dans votre navigateur web."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: sans-serif;">
+        <h2>Indépendance Financière : Quand ? — Simulateur FIRE</h2>
+        <p>Veuillez activer JavaScript pour utiliser ce simulateur.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

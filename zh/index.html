@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>財務自由，何時？ — FIRE 試算器 & 複利資產成長模擬</title>
+    <meta
+      name="description"
+      content="透過 FIRE 試算器一目了然複利資產成長曲線與 4% 動態提領法則！自訂儲蓄與支出階段，即時預測達成財務自由的最佳時機與每月被動現金流。"
+    />
+    <link rel="canonical" href="https://whencanifire.vercel.app/zh/" />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="en" href="https://whencanifire.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://whencanifire.vercel.app/ko/" />
+    <link rel="alternate" hreflang="ja" href="https://whencanifire.vercel.app/ja/" />
+    <link rel="alternate" hreflang="de" href="https://whencanifire.vercel.app/de/" />
+    <link rel="alternate" hreflang="es" href="https://whencanifire.vercel.app/es/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://whencanifire.vercel.app/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://whencanifire.vercel.app/fr/" />
+    <link rel="alternate" hreflang="x-default" href="https://whencanifire.vercel.app/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="財務自由，何時？ — FIRE 試算器" />
+    <meta name="twitter:description" content="複利的威力與源源不絕的現金流試算，提早規劃 FIRE 退休目標。" />
+    <meta name="twitter:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="財務自由，何時？ — FIRE 試算器" />
+    <meta property="og:description" content="複利資產成長曲線與 4% 動態提領法則，即時試算提早退休時間點。" />
+    <meta property="og:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+    <meta property="og:url" content="https://whencanifire.vercel.app/zh/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="WhenCanIFIRE" />
+
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "財務自由，何時？ — FIRE 試算器",
+        "url": "https://whencanifire.vercel.app/zh/",
+        "description": "複利資產成長曲線與 4% 動態提領法則試算工具。",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "zh-Hant",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "TWD"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "這個試算器是三一研究（Trinity Study）的歷史回測工具嗎？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不是。本工具並非重演過去歷史股價來計算破產機率，而是依據您所設定的報酬率、多階段收支及通膨率，即時推算未來 40 年資產複利增長與每月可提領金額的向前動態現金流試算器。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FIRE 達成後的每月提領額是如何計算的？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "自您指定的 FIRE 年份起，每年初將自剩餘總資產中提領 4% 作為全年生活費。將其除以 12 即可得出名目每月提領額，並同步扣除通膨折現為今日購買力的實質每月提領額。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "實質資產與名目資產有何不同？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名目資產是帳戶上的數字；實質資產則是扣除通膨後的真實購買力價值。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "儲蓄與支出階段如何計入複利？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "階段金額以今日購買力為準，程式會隨年份自動計入通膨調整。為反映全年持續發生的金流，採用年中複利折算公式 flow * sqrt(1 + r) 計算。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "我輸入的財務資料會被儲存至伺服器嗎？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "完全不會。100% 所有計算皆在您的瀏覽器本機端執行。"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: sans-serif;">
+        <h2>財務自由，何時？ — FIRE 試算器</h2>
+        <p>請啟用 JavaScript 以使用本試算工具。</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

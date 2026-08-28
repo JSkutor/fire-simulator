@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>経済的自立、いつ？ — FIREシミュレーター & 資産形成計算機</title>
+    <meta
+      name="description"
+      content="FIREシミュレーターで複利資産成長曲線と4%定率取崩しルールを可視化！積立・支出期間や想定利回り別の経済的自立時期をリアルタイムに試算できます。"
+    />
+    <link rel="canonical" href="https://whencanifire.vercel.app/ja/" />
+
+    <!-- hreflang: 다국어 상호 참조 -->
+    <link rel="alternate" hreflang="en" href="https://whencanifire.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://whencanifire.vercel.app/ko/" />
+    <link rel="alternate" hreflang="ja" href="https://whencanifire.vercel.app/ja/" />
+    <link rel="alternate" hreflang="de" href="https://whencanifire.vercel.app/de/" />
+    <link rel="alternate" hreflang="es" href="https://whencanifire.vercel.app/es/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://whencanifire.vercel.app/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://whencanifire.vercel.app/fr/" />
+    <link rel="alternate" hreflang="x-default" href="https://whencanifire.vercel.app/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="経済的自立、いつ？ — FIREシミュレーター"
+    />
+    <meta
+      name="twitter:description"
+      content="複利の力と4%ルールで早期リタイア時期と月間キャッシュフローをシミュレーション。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://whencanifire.vercel.app/thumbnail.png"
+    />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="経済的自立、いつ？ — FIREシミュレーター"
+    />
+    <meta
+      property="og:description"
+      content="複利資産成長曲線と4%定率取崩しルールを可視化。積立・支出期間ごとの早期リタイア時期をリアルタイム試算。"
+    />
+    <meta
+      property="og:image"
+      content="https://whencanifire.vercel.app/thumbnail.png"
+    />
+    <meta
+      property="og:url"
+      content="https://whencanifire.vercel.app/ja/"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="WhenCanIFIRE" />
+
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD Structured Data: WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "経済的自立、いつ？ — FIREシミュレーター",
+        "url": "https://whencanifire.vercel.app/ja/",
+        "description": "複利資産成長曲線と4%定率取崩しルールで早期リタイア時期と月間キャッシュフローをシミュレーション。",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "ja",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "このシミュレーターはトリニティ研究のバックテストツールですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。過去データを再演して破産確率を算出するツールではなく、設定した利回り・収支フロー・インフレ率に基づき、今後40年間の資産推移と月間取崩し額をリアルタイム計算する将来確定型キャッシュフローシミュレーターです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "FIRE後の月間取崩し額はどのように計算されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "指定したFIRE達成年以降、毎年の年初資産残高の4%を取り崩します。これを12分割して月間名目取崩額を算出し、インフレ率で割り引いた現在の購買力基準の月間実質取崩額を同時に表示します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "名目資産と実質資産はどう違いますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "名目資産は将来の通帳に印字される額面金額です。実質資産は設定インフレ率を割り引いて計算した現在の購買力価値です。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "貯蓄・支出期間は複利にどう反映されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "期間金額は現在価値基準であり、毎年のインフレ率に応じて自動増額調整されます。年中平均の収支を反映するため、中間点複利式 flow * sqrt(1 + r) を適用します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "入力した財務データはサーバーに保存されますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一切保存されません。100%すべての計算はブラウザのローカル環境内でのみ実行されます。"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: sans-serif;">
+        <h2>経済的自立、いつ？ — FIREシミュレーター</h2>
+        <p>このシミュレーターをご利用いただくにはJavaScriptを有効にしてください。</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

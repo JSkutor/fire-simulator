@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libertad Financiera: ¿Cuándo? — Simulador FIRE & Calculadora de Interés Compuesto</title>
+    <meta
+      name="description"
+      content="Simulador FIRE interactivo: Visualiza el crecimiento patrimonial por interés compuesto, la regla de retiro del 4% y tu fecha estimada de libertad financiera."
+    />
+    <link rel="canonical" href="https://whencanifire.vercel.app/es/" />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="en" href="https://whencanifire.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://whencanifire.vercel.app/ko/" />
+    <link rel="alternate" hreflang="ja" href="https://whencanifire.vercel.app/ja/" />
+    <link rel="alternate" hreflang="de" href="https://whencanifire.vercel.app/de/" />
+    <link rel="alternate" hreflang="es" href="https://whencanifire.vercel.app/es/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://whencanifire.vercel.app/zh/" />
+    <link rel="alternate" hreflang="fr" href="https://whencanifire.vercel.app/fr/" />
+    <link rel="alternate" hreflang="x-default" href="https://whencanifire.vercel.app/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Libertad Financiera: ¿Cuándo? — Simulador FIRE" />
+    <meta name="twitter:description" content="Interés compuesto y simulador de flujo de caja continuo para FIRE." />
+    <meta name="twitter:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Libertad Financiera: ¿Cuándo? — Simulador FIRE" />
+    <meta property="og:description" content="Simula el interés compuesto, la regla del 4% y tu renta pasiva mensual." />
+    <meta property="og:image" content="https://whencanifire.vercel.app/thumbnail.png" />
+    <meta property="og:url" content="https://whencanifire.vercel.app/es/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="WhenCanIFIRE" />
+
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Libertad Financiera: ¿Cuándo? — Simulador FIRE",
+        "url": "https://whencanifire.vercel.app/es/",
+        "description": "Simulador de interés compuesto y regla del 4% para alcanzar la libertad financiera.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "es",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Es este simulador una herramienta de backtesting histórico?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Es un simulador de flujo de caja hacia adelante a 40 años que calcula el crecimiento patrimonial y la renta mensual según tus propios parámetros de rentabilidad e inflación."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo se calcula el retiro mensual tras el hito FIRE?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A partir del año FIRE seleccionado, se retira el 4% del saldo patrimonial a principios de año para gastos. Se divide entre 12 para obtener la renta mensual nominal y real."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuál es la diferencia entre patrimonio real y nominal?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "El nominal es la cifra monetaria en cuenta; el real descuenta la inflación para mostrar lo que verdaderamente puedes comprar en precios de hoy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo se capitalizan las fases de ahorro y gasto?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Los importes se actualizan con la inflación cada año. Para flujos continuos se aplica la fórmula flujo * sqrt(1 + r)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Se guardan mis datos financieros en algún servidor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. El 100% de los cálculos y datos se ejecutan localmente en tu navegador."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: sans-serif;">
+        <h2>Libertad Financiera: ¿Cuándo? — Simulador FIRE</h2>
+        <p>Por favor, activa JavaScript para utilizar este simulador.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
