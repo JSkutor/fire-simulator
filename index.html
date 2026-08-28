@@ -1,79 +1,130 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2563eb" />
-    <title>경제적 자립, 언제?</title>
+    <title>Financial Independence: When? | FIRE Calculator & Simulator</title>
     <meta
       name="description"
-      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+      content="Interactive FIRE Simulator: Calculate compound asset growth, 4% dynamic withdrawal rule, nominal vs real wealth, and safe financial independence milestones."
     />
-    <link rel="canonical" href="https://jskutor.github.io/fire-simulator/" />
+    <link rel="canonical" href="https://fire-simulator.vercel.app/" />
 
-    <!-- hreflang: 다국어 상호 참조 -->
-    <link rel="alternate" hreflang="ko" href="https://jskutor.github.io/fire-simulator/" />
-    <link rel="alternate" hreflang="en" href="https://jskutor.github.io/fire-simulator/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://jskutor.github.io/fire-simulator/" />
+    <!-- hreflang: multi-language cross-references -->
+    <link rel="alternate" hreflang="en" href="https://fire-simulator.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://fire-simulator.vercel.app/ko/" />
+    <link rel="alternate" hreflang="x-default" href="https://fire-simulator.vercel.app/" />
 
-    <!-- Twitter Card (X 공유 미리보기) -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="경제적 자립, 언제?" />
+    <meta name="twitter:title" content="Financial Independence: When? | FIRE Calculator" />
     <meta
       name="twitter:description"
-      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+      content="Interactive FIRE Simulator: Calculate compound asset growth, 4% dynamic withdrawal rule, and safe financial independence milestones."
     />
     <meta
       name="twitter:image"
-      content="https://jskutor.github.io/fire-simulator/thumbnail.png"
+      content="https://fire-simulator.vercel.app/thumbnail.png"
     />
 
-    <!-- Open Graph (카카오톡, SNS 공유 미리보기) -->
-    <meta property="og:title" content="경제적 자립, 언제?" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Financial Independence: When? | FIRE Calculator" />
     <meta
       property="og:description"
-      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+      content="Interactive FIRE Simulator: Calculate compound asset growth, 4% dynamic withdrawal rule, and safe financial independence milestones."
     />
     <meta
       property="og:image"
-      content="https://jskutor.github.io/fire-simulator/thumbnail.png"
+      content="https://fire-simulator.vercel.app/thumbnail.png"
     />
     <meta
       property="og:url"
-      content="https://jskutor.github.io/fire-simulator/"
+      content="https://fire-simulator.vercel.app/"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:locale" content="en_US" />
 
-    <link rel="icon" href="/fire-simulator/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/fire-simulator/favicon.png"
+      href="/favicon.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/fire-simulator/favicon.png"
+      href="/favicon.png"
     />
 
-    <!-- JSON-LD 구조화 데이터 (Schema.org WebApplication) -->
+    <!-- JSON-LD Structured Data: WebApplication -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "경제적 자립, 언제?",
-        "url": "https://jskutor.github.io/fire-simulator/",
-        "description": "FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요.",
+        "name": "FIRE Simulator — Financial Independence: When?",
+        "url": "https://fire-simulator.vercel.app/",
+        "description": "Simulate compound asset growth, dynamic 4% withdrawal rule, and financial independence milestones with custom cash flow stages.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
+        "inLanguage": "en",
         "offers": {
           "@type": "Offer",
           "price": "0",
-          "priceCurrency": "KRW"
+          "priceCurrency": "USD"
         }
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQPage (Google Rich Snippets) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is the 4% withdrawal rate safe for an early retirement lasting 40+ years?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The original Trinity Study evaluated 30-year horizons with a 95% success rate. For longer horizons (40-50+ years typical of early FIRE), adopting a Dynamic Withdrawal rule where withdrawals adjust to annual portfolio balance significantly reduces ruin risk compared to a fixed-dollar rule."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the simulator calculate Real vs. Nominal wealth?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nominal wealth compounds each year at your selected Annual Return rate. Real wealth discounts this nominal sum by the long-term inflation rate (2.0% for USD) using the formula: Real = Nominal / (1 + inflation)^year to show today's true purchasing power."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are savings and spending periods calculated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Each row in the Savings & Spending Periods table represents annual contributions (positive) or living expenses (negative) in today's dollars, which are inflation-adjusted over time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between Fixed 4% and Dynamic 4% withdrawal?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In a Fixed 4% strategy, you withdraw 4% on year 1 and inflate that dollar amount. In Dynamic 4% withdrawal (used here), you withdraw 4% of whatever portfolio balance you currently hold each year, naturally cushioning bear markets."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my personal financial information stored on your servers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. 100% of all calculations, inputs, and simulations run entirely client-side in your web browser. We do not store, track, or collect your financial data on any server."
+            }
+          }
+        ]
       }
     </script>
   </head>
@@ -90,17 +141,17 @@
         "
       >
         <h1 style="font-size: 1.5rem; margin-bottom: 8px">
-          경제적 자립, 언제?
+          Financial Independence: When? | FIRE Simulator
         </h1>
         <p style="font-size: 1rem; color: #475569; margin-bottom: 4px">
-          FIRE 시뮬레이터 — 저축·지출 구간과 수익률을 설정해 경제적 자립 시점을
-          예측해 보세요.
+          Simulate your compound asset growth, 4% dynamic withdrawal rule, and safe financial independence milestones.
         </p>
         <p style="font-size: 0.875rem; color: #94a3b8">
-          이 사이트는 JavaScript가 필요합니다.
+          This application requires JavaScript to render interactive charts.
         </p>
       </div>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+

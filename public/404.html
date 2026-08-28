@@ -1,17 +1,18 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>페이지를 찾을 수 없습니다 — 경제적 자립, 언제?</title>
+    <title>Page Not Found — FIRE Simulator</title>
     <script>
-      // 언어 경로 보존: /en/ 경로로 접근한 경우 영어 루트로 리다이렉트
+      // Preserve language path for SPA routing
       sessionStorage.redirect = location.href;
-      var isEn = location.pathname.indexOf('/en') !== -1;
-      var base = 'https://jskutor.github.io/fire-simulator/';
-      location.replace(isEn ? base + 'en/' : base);
+      var isKo = location.pathname.indexOf('/ko') !== -1;
+      var base = location.origin + '/';
+      location.replace(isKo ? base + 'ko/' : base);
     </script>
   </head>
   <body>
-    <p>페이지를 찾을 수 없습니다. <a href="https://jskutor.github.io/fire-simulator/">메인 페이지로 이동</a></p>
+    <p>Page not found. <a href="/">Go to Home</a></p>
   </body>
 </html>
+

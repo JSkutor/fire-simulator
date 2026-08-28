@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jskutor.github.io/fire-simulator/sitemap.xml
+Sitemap: https://fire-simulator.vercel.app/sitemap.xml
+

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <title>경제적 자립, 언제? | FIRE 계산기 & 시뮬레이터</title>
+    <meta
+      name="description"
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+    />
+    <link rel="canonical" href="https://fire-simulator.vercel.app/ko/" />
+
+    <!-- hreflang: 다국어 상호 참조 -->
+    <link rel="alternate" hreflang="en" href="https://fire-simulator.vercel.app/" />
+    <link rel="alternate" hreflang="ko" href="https://fire-simulator.vercel.app/ko/" />
+    <link rel="alternate" hreflang="x-default" href="https://fire-simulator.vercel.app/" />
+
+    <!-- Twitter Card (X 공유 미리보기) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="경제적 자립, 언제? | FIRE 계산기" />
+    <meta
+      name="twitter:description"
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+    />
+    <meta
+      name="twitter:image"
+      content="https://fire-simulator.vercel.app/thumbnail.png"
+    />
+
+    <!-- Open Graph (카카오톡, SNS 공유 미리보기) -->
+    <meta property="og:title" content="경제적 자립, 언제? | FIRE 계산기" />
+    <meta
+      property="og:description"
+      content="FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요."
+    />
+    <meta
+      property="og:image"
+      content="https://fire-simulator.vercel.app/thumbnail.png"
+    />
+    <meta
+      property="og:url"
+      content="https://fire-simulator.vercel.app/ko/"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon.png"
+    />
+
+    <!-- JSON-LD 구조화 데이터: WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "경제적 자립, 언제? — FIRE 시뮬레이터",
+        "url": "https://fire-simulator.vercel.app/ko/",
+        "description": "FIRE 시뮬레이터로 복리 자산 성장 곡선과 4% 인출 전략을 한눈에! 저축·지출 구간, 수익률별 경제적 자립 시점을 예측해 보세요.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "ko",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD 구조화 데이터: FAQPage (Google / Naver 리치 스니펫) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "4% 인출률은 40년 이상의 긴 은퇴 기간에도 안전한가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "오리지널 트리니티 연구는 30년 은퇴 기간을 기준으로 95% 성공률을 도출했습니다. 40~50년 이상의 조기 은퇴를 준비하신다면 3.25%~3.5%의 보수적인 인출률을 적용하거나, 본 시뮬레이터처럼 시장 상황에 맞춰 인출액이 유동적으로 조절되는 정률 인출(Dynamic Rule) 전략을 취하는 것이 안전합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "실질 자산과 명목 자산은 어떻게 계산되나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "명목 자산은 입력하신 연간 수익률로 매년 복리 성장합니다. 실질 자산은 여기에 장기 물가상승률(한국 2.3%)을 반영하여 '실질 = 명목 ÷ (1 + 인플레이션)^년차' 공식으로 현재 구매력 가치로 할인 환산됩니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "저축 및 지출 구간(Periods)은 복리에 어떻게 반영되나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "저축/지출 구간에 입력한 금액은 '현재 가치' 기준입니다. 시뮬레이션에서는 매년 물가상승률을 감안하여 실제 납입/지출 금액이 점진적으로 증액되는 것으로 계산되며, 여러 구간이 겹칠 경우 자동으로 합산되어 자산에 반영됩니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "정액 인출(Fixed 4%)과 정률 인출(Dynamic 4%)의 차이는 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "정액 인출은 은퇴 첫해 자산의 4%를 정하고 매년 물가상승률만큼만 인출액을 올리는 방식입니다. 반면 본 시뮬레이터가 채택한 정률 인출은 매년 당해 연도 잔여 자산의 4%를 인출하므로, 하락장에는 인출액이 줄어 원금을 보호하고 상승장에는 더 넉넉하게 생활할 수 있어 포트폴리오 파산 위험을 차단합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "내가 입력한 자산 및 소득 정보가 서버에 저장되나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "전혀 저장되지 않습니다. 100% 모든 계산과 데이터 처리는 사용자의 웹 브라우저 로컬 환경에서만 안전하게 실행됩니다. '공유' 버튼을 누를 때 생성되는 URL 또한 브라우저 주소창의 파라미터로만 인코딩되며 외부 서버로 전송되지 않습니다."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div
+        style="
+          text-align: center;
+          padding: 40px;
+          max-width: 600px;
+          margin: 0 auto;
+          font-family: sans-serif;
+        "
+      >
+        <h1 style="font-size: 1.5rem; margin-bottom: 8px">
+          경제적 자립, 언제? | FIRE 시뮬레이터
+        </h1>
+        <p style="font-size: 1rem; color: #475569; margin-bottom: 4px">
+          FIRE 시뮬레이터 — 저축·지출 구간과 수익률을 설정해 경제적 자립 시점을 예측해 보세요.
+        </p>
+        <p style="font-size: 0.875rem; color: #94a3b8">
+          이 사이트는 인터랙티브 차트 렌더링을 위해 JavaScript가 필요합니다.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

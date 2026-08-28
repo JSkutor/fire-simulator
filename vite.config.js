@@ -4,13 +4,15 @@ import { resolve } from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/fire-simulator/",
+  base: "/",
   build: {
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        en: resolve(__dirname, "en/index.html"),
+        ko: resolve(__dirname, "ko/index.html"),
       },
     },
   },
 });
+
+

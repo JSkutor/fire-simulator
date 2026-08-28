@@ -1,66 +1,106 @@
 import { useMemo } from "react";
-import ko from "./ko";
-import en from "./en";
+import ko from "./ko.js";
+import en from "./en.js";
 
-// 한국어 기본 인플레이션 (한국 CPI 20년 평균)
-const INFLATION_KO = 0.023;
-// 영어 기본 인플레이션 (미 연준 장기 목표)
-const INFLATION_EN = 0.02;
 
-// 한국어: 만원 단위 입력 → 원 단위 변환 (× 10,000)
-// 영어: 달러 단위 직접 입력 (× 1)
-const SCALE_KO = 10000;
-const SCALE_EN = 1;
-
-// 기본값
-const DEFAULTS = {
-  ko: {
-    base: 30000000, // 3천만원
-    rate: 7,
-    periods: [{ start: 0, end: 20, amount: 1200 }], // 1200만원/년
-  },
+/**
+ * Scalable locale configuration registry.
+ * To add a new language (e.g. ja, es), add its dictionary and registry config here.
+ */
+export const LOCALES = {
   en: {
-    base: 30000, // $30,000
-    rate: 7,
-    periods: [{ start: 0, end: 20, amount: 12000 }], // $12,000/yr
+    lang: "en",
+    name: "English",
+    flag: "🇺🇸",
+    t: en,
+    isEn: true,
+    isKo: false,
+    inflation: 0.02, // US Fed long-term PCE target: 2.0%
+    scale: 1, // Direct dollar input
+    currency: "USD",
+    path: "/",
+    defaults: {
+      base: 30000, // $30,000
+      rate: 7,
+      periods: [{ start: 0, end: 20, amount: 12000 }], // $12,000/yr ($1,000/mo)
+    },
+  },
+  ko: {
+    lang: "ko",
+    name: "한국어",
+    flag: "🇰🇷",
+    t: ko,
+    isEn: false,
+    isKo: true,
+    inflation: 0.023, // 한국 통계청 20년 CPI 연평균: 2.3%
+    scale: 10000, // 만원 단위 입력 → 원 단위 변환 (× 10,000)
+    currency: "KRW",
+    path: "/ko/",
+    defaults: {
+      base: 30000000, // 3천만원
+      rate: 7,
+      periods: [{ start: 0, end: 20, amount: 1200 }], // 1200만원/년 (100만원/월)
+    },
   },
 };
 
+export const SUPPORTED_LANGS = Object.keys(LOCALES);
+
 /**
- * URL 경로 기반 로케일 감지 hook
- * /fire-simulator/en/ → 'en', 그 외 → 'ko'
+ * Detect locale from current window URL path.
+ * Root /fire-simulator/ → 'en' (default)
+ * Subpath /fire-simulator/ko/ → 'ko'
+ */
+export function detectLocaleFromPath(pathname = window.location.pathname) {
+  if (/\/ko(\/|$)/.test(pathname)) {
+    return "ko";
+  }
+  return "en"; // Global default is English
+}
+
+/**
+ * Generate URL to switch languages while preserving query parameters (shared simulation state).
+ */
+export function getSwitchLangUrl(targetLang) {
+  const targetConfig = LOCALES[targetLang] || LOCALES.en;
+  const search = window.location.search || "";
+  return targetConfig.path + search;
+}
+
+/**
+ * URL path-based locale detection hook
  */
 export function useLocale() {
   return useMemo(() => {
-    const path = window.location.pathname;
-    const isEn = /\/en(\/|$)/.test(path);
-    const lang = isEn ? "en" : "ko";
+    const lang = detectLocaleFromPath();
+    const config = LOCALES[lang] || LOCALES.en;
 
     return {
-      t: isEn ? en : ko,
-      lang,
-      isEn,
-      inflation: isEn ? INFLATION_EN : INFLATION_KO,
-      scale: isEn ? SCALE_EN : SCALE_KO,
-      defaults: isEn ? DEFAULTS.en : DEFAULTS.ko,
+      ...config,
+      getSwitchUrl: (targetLang) => getSwitchLangUrl(targetLang),
     };
   }, []);
 }
 
 /**
- * 브라우저 선호 언어 감지 (배너 표시용)
+ * Detect user's preferred browser language for banner prompts
  * @returns {'ko' | 'en'}
  */
 export function detectBrowserLang() {
+  if (typeof window === "undefined") return "en";
+
   const stored = localStorage.getItem("fire-sim-lang-dismissed");
-  if (stored) return null; // 이미 닫은 배너는 다시 안 보여줌
+  if (stored) return null; // Already dismissed banner
 
   const langs = navigator.languages || [
     navigator.language || navigator.userLanguage,
   ];
+
   for (const l of langs) {
-    if (l.startsWith("ko")) return "ko";
-    if (l.startsWith("en")) return "en";
+    if (typeof l === "string") {
+      if (l.startsWith("ko")) return "ko";
+      if (l.startsWith("en")) return "en";
+    }
   }
-  return "en"; // 기본: 영어 (글로벌)
+  return "en"; // Global default
 }
