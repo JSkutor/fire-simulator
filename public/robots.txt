@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fire-simulator.vercel.app/sitemap.xml
+Sitemap: https://whencanifire.vercel.app/sitemap.xml
+
 
