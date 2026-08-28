@@ -138,11 +138,14 @@ export default function App() {
   return (
     <div className="min-h-screen" ref={topRef}>
       <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-8 space-y-4 md:space-y-6">
-        {/* 언어 감지 배너 */}
+        {/* 최상단 언어 선택 드롭다운 & 배너 */}
+        <div className="flex items-center justify-end px-1 pt-1">
+          <LanguageSelector locale={locale} />
+        </div>
         <LanguageBanner locale={locale} />
 
         {/* 헤더 */}
-        <header className="pt-2 px-1">
+        <header className="px-1">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="min-w-0">
               <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
@@ -154,8 +157,6 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-2 self-start shrink-0">
-              <LanguageSelector locale={locale} />
-
               <button
                 type="button"
                 onClick={handleShare}
