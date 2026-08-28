@@ -86,10 +86,18 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Is the 4% withdrawal rate safe for an early retirement lasting 40+ years?",
+            "name": "Is this simulator a historical Trinity Study backtesting tool?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The original Trinity Study evaluated 30-year horizons with a 95% success rate. For longer horizons (40-50+ years typical of early FIRE), adopting a Dynamic Withdrawal rule where withdrawals adjust to annual portfolio balance significantly reduces ruin risk compared to a fixed-dollar rule."
+              "text": "No. Rather than replaying historical stock market drawdowns to compute statistical failure probabilities, this tool is a deterministic Forward Cash Flow Simulator. It models your projected 40-year wealth trajectory, inflation-adjusted purchasing power, and monthly passive income based on your customized return rates and multi-phase cash flows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is the monthly withdrawal calculated after FIRE?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "From your chosen FIRE milestone year onward, 4% of the beginning-of-year portfolio balance is withdrawn for living expenses. We divide this by 12 to display your monthly nominal cash flow, alongside its inflation-discounted real value in today's purchasing power."
             }
           },
           {
@@ -97,23 +105,15 @@
             "name": "How does the simulator calculate Real vs. Nominal wealth?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Nominal wealth compounds each year at your selected Annual Return rate. Real wealth discounts this nominal sum by the long-term inflation rate (2.0% for USD) using the formula: Real = Nominal / (1 + inflation)^year to show today's true purchasing power."
+              "text": "Nominal wealth compounds each year at your selected Annual Return rate. Real wealth discounts this nominal sum by the long-term inflation rate (2.0% for USD) using the formula: Real = Nominal / (1 + inflation)^year."
             }
           },
           {
             "@type": "Question",
-            "name": "How are savings and spending periods calculated?",
+            "name": "How are savings and spending periods compounded?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Each row in the Savings & Spending Periods table represents annual contributions (positive) or living expenses (negative) in today's dollars, which are inflation-adjusted over time."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between Fixed 4% and Dynamic 4% withdrawal?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "In a Fixed 4% strategy, you withdraw 4% on year 1 and inflate that dollar amount. In Dynamic 4% withdrawal (used here), you withdraw 4% of whatever portfolio balance you currently hold each year, naturally cushioning bear markets."
+              "text": "Amounts in the Savings & Spending Periods table are in today's purchasing power and are inflation-adjusted each year. To reflect continuous annual cash flows, the simulator applies a mid-year compounding formula flow * sqrt(1 + r). Overlapping periods are summed automatically."
             }
           },
           {

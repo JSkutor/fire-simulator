@@ -17,8 +17,8 @@ export default {
   presetApplied: "Preset applied!",
   presets: [
     {
-      id: "trinity",
-      name: "Trinity 4% Classic",
+      id: "standard",
+      name: "Standard Compound & 4% Withdrawal",
       desc: "Starting $50k, saving $20k/yr for 15 yrs at 7% return, retiring Year 15.",
       base: 50000,
       rate: 7,
@@ -141,24 +141,25 @@ export default {
 
   // Guides Section (SEO Content)
   guideSectionBadge: "Deep Dive Guides",
-  guideSectionTitle: "Mastering FIRE: Principles, Math & Safe Strategies",
+  guideSectionTitle: "Mastering Multi-Stage Cash Flow & FIRE Math",
   guideSectionSubtitle:
-    "Explore how compound interest, inflation math, and withdrawal rates govern sustainable financial independence.",
+    "Explore how compound growth, inflation drag, dynamic 4% withdrawals, and phased cash flows shape financial independence.",
 
   guides: [
     {
-      id: "trinity-study",
+      id: "rule-of-four-percent",
       badge: "Rule #1",
-      title: "The Trinity Study & The 4% Rule Explained",
-      subtitle: "Why 4% became the gold standard of retirement withdrawals",
+      title: "The 4% Rule & Multi-Stage Cash Flow Simulation",
+      subtitle: "Moving beyond historical backtests to model your custom 40-year wealth trajectory",
       content: [
-        "In 1998, three professors at Trinity University published a landmark study analyzing historical market returns from 1926 to 1995. They discovered that withdrawing **4% of your initial portfolio value** (adjusted annually for inflation) offered a **95% success rate** over a 30-year retirement across balanced stock/bond allocations.",
-        "However, traditional 4% withdrawal assumes a fixed dollar sum adjusted for inflation regardless of market drops. Our simulator implements **Dynamic 4% Annual Withdrawal**—withdrawing 4% of the remaining portfolio balance each year. This provides a self-adjusting safety valve: during bull markets your monthly cash flow expands, while during bear markets withdrawals automatically scale back, ensuring your portfolio never depletes to zero.",
+        "In the FIRE movement, the **'4% Rule'** serves as a cornerstone benchmark—stating that accumulating roughly **25× your annual expenses** provides a sustainable capital base for financial independence.",
+        "While traditional calculators often rely on retrospective historical backtesting to output a static failure probability, real lives are dynamic. Careers involve sabbatical years, income jumps, business launches, and phased partial retirements (Barista FIRE).",
+        "This simulator applies a **40-year deterministic forward cash flow model** combining **multi-phase savings/spending** with a **4% dynamic withdrawal rule** from the beginning-of-year asset balance. This self-adjusts with market growth and directly projects your accessible monthly passive income (`Monthly Cash Flow = Annual Withdrawal ÷ 12`) across any year.",
       ],
       takeaways: [
-        "4% Rule target: Save 25× your annual living expenses (Annual Spending × 25).",
-        "Dynamic percentage withdrawals drastically reduce portfolio ruin risk for 30+ year early retirements.",
-        "Monthly passive cash flow = (Current Portfolio Balance × 4%) ÷ 12.",
+        "Core FIRE Benchmark: Target Net Worth = Annual Living Expenses × 25.",
+        "Multi-stage savings/spending accurately reflects career transitions, sabbaticals, and side incomes.",
+        "Monthly passive cash flow = (Beginning-of-year Portfolio Balance × 4%) ÷ 12.",
       ],
     },
     {
@@ -197,27 +198,27 @@ export default {
   faqSectionBadge: "FAQ",
   faqSectionTitle: "Frequently Asked Questions",
   faqSectionSubtitle:
-    "Clear answers on FIRE calculations, compound interest assumptions, and data privacy.",
+    "Clear answers on simulation methodology, compound interest formulas, and data privacy.",
   faqs: [
     {
-      question: "Is the 4% withdrawal rate safe for an early retirement lasting 40+ years?",
+      question: "Is this simulator a historical Trinity Study backtesting tool?",
       answer:
-        "The original Trinity Study evaluated 30-year horizons. For longer horizons (40–50+ years typical of early 30s/40s FIRE), financial researchers like Wade Pfau and EarlyRetirementNow recommend a slightly more conservative rate of 3.25% to 3.5%, or adopting a Dynamic Withdrawal rule (adjusting spending during market drawdowns). Our simulator applies a 4% dynamic annual rule to balance growth and ongoing passive income.",
+        "No. Rather than replaying historical stock market drawdowns to compute statistical failure probabilities, this tool is a deterministic Forward Cash Flow Simulator. It models your projected 40-year wealth trajectory, inflation-adjusted purchasing power, and monthly passive income based on your customized return rates and multi-phase cash flows.",
+    },
+    {
+      question: "How is the monthly withdrawal calculated after FIRE?",
+      answer:
+        "From your chosen FIRE milestone year onward, 4% of the beginning-of-year portfolio balance is withdrawn for living expenses. We divide this by 12 to display your monthly nominal cash flow, alongside its inflation-discounted real value in today's purchasing power.",
     },
     {
       question: "How does the simulator calculate Real vs. Nominal wealth?",
       answer:
-        "Nominal wealth compounds each year at your selected Annual Return rate (e.g. 7%) plus/minus your active savings or spending. Real wealth discounts this nominal sum by the long-term inflation rate (2.0% for USD, 2.3% for KRW) using the formula: Real = Nominal / (1 + inflation)^year. This shows you exactly what your future fortune can buy in today's grocery, rent, and travel prices.",
+        "Nominal wealth compounds each year at your selected Annual Return rate (e.g. 7%) plus/minus your active savings or spending. Real wealth discounts this nominal sum by the long-term inflation rate (2.0% for USD, 2.3% for KRW) using the formula: Real = Nominal / (1 + inflation)^year.",
     },
     {
-      question: "How are savings and spending periods calculated?",
+      question: "How are savings and spending periods compounded?",
       answer:
-        "Each row in the Savings & Spending Periods table represents annual contributions (positive) or living expenses (negative) in today's purchasing power. When compounded, these cash flows are adjusted for inflation so that your real savings effort remains consistent over time. Overlapping periods are summed automatically.",
-    },
-    {
-      question: "What is the difference between Fixed 4% and Dynamic 4% withdrawal?",
-      answer:
-        "In a Fixed 4% strategy, you withdraw 4% of your portfolio on day 1 of retirement and increase that exact dollar amount with inflation each year. In a Dynamic 4% strategy (used here), you withdraw 4% of whatever portfolio balance you currently hold. This prevents portfolio bankruptcy because withdrawals automatically shrink when markets drop and expand when markets surge.",
+        "Amounts in the Savings & Spending Periods table are in today's purchasing power and are inflation-adjusted each year. To reflect continuous annual cash flows, the simulator applies a mid-year compounding formula `flow × √(1 + r)`. Overlapping periods are summed automatically.",
     },
     {
       question: "Is my personal financial information stored on your servers?",
