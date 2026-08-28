@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { trackFaqToggled } from "../utils/analytics";
 
 export default function FaqSection({ locale }) {
   const { t } = locale;
@@ -7,7 +8,11 @@ export default function FaqSection({ locale }) {
   if (!t.faqs || t.faqs.length === 0) return null;
 
   const toggle = (idx) => {
-    setOpenIndex((cur) => (cur === idx ? -1 : idx));
+    const nextIdx = openIndex === idx ? -1 : idx;
+    setOpenIndex(nextIdx);
+    if (nextIdx !== -1 && t.faqs[idx]) {
+      trackFaqToggled(t.faqs[idx].question, true);
+    }
   };
 
   return (

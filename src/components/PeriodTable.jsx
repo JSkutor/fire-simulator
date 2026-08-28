@@ -1,6 +1,7 @@
 import React from "react";
 import PeriodRow from "./PeriodRow";
 import { normalizePeriod } from "../utils/periodValidation";
+import { trackPeriodAdded, trackPeriodRemoved } from "../utils/analytics";
 
 export default function PeriodTable({ periods, setPeriods, locale }) {
   const { t } = locale;
@@ -11,14 +12,18 @@ export default function PeriodTable({ periods, setPeriods, locale }) {
     setPeriods(arr);
   };
   const removeRow = (idx) => {
-    setPeriods(periods.filter((_, i) => i !== idx));
+    const nextArr = periods.filter((_, i) => i !== idx);
+    setPeriods(nextArr);
+    trackPeriodRemoved(nextArr.length);
   };
   const addRow = () => {
     const normalizedPeriods = periods.map((period) => normalizePeriod(period));
     const last = normalizedPeriods[normalizedPeriods.length - 1];
     const start = last ? Math.min(40, last.end + 1) : 0;
     const end = Math.min(40, start + 4);
-    setPeriods([...normalizedPeriods, { start, end, amount: 0 }]);
+    const nextArr = [...normalizedPeriods, { start, end, amount: 0 }];
+    setPeriods(nextArr);
+    trackPeriodAdded(nextArr.length);
   };
 
   return (

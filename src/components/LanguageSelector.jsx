@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { LOCALES, SUPPORTED_LANGS } from "../i18n/useLocale";
+import { trackLanguageSwitched } from "../utils/analytics";
 
 export default function LanguageSelector({ locale }) {
   const { lang, getSwitchUrl } = locale;
@@ -21,6 +22,11 @@ export default function LanguageSelector({ locale }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+
+  const handleSelectLang = (code) => {
+    trackLanguageSwitched(lang, code);
+    setOpen(false);
+  };
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -74,7 +80,7 @@ export default function LanguageSelector({ locale }) {
                     ? "bg-blue-50 font-bold text-blue-700"
                     : "text-slate-700 hover:bg-slate-100 font-medium"
                 }`}
-                onClick={() => setOpen(false)}
+                onClick={() => handleSelectLang(code)}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-sm">{item.flag}</span>

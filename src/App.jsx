@@ -13,6 +13,14 @@ import { decodeParamsToState, copyShareURL } from "./utils/urlShare";
 import { useLocale, detectBrowserLang, LOCALES } from "./i18n/useLocale";
 import AnimationTestBoard from "./components/AnimationTestBoard";
 
+import {
+  initAnalytics,
+  setAnalyticsLocale,
+  trackPresetApplied,
+  trackFireYearChanged,
+  trackShareUrlCopied,
+} from "./utils/analytics";
+
 function LanguageBanner({ locale }) {
   const { lang, getSwitchUrl } = locale;
   const [targetLang, setTargetLang] = useState(null);
@@ -63,7 +71,7 @@ function LanguageBanner({ locale }) {
 
 export default function App() {
   const locale = useLocale();
-  const { t, scale, defaults, inflation: defaultInflation } = locale;
+  const { t, scale, defaults, inflation: defaultInflation, lang, currency } = locale;
   const fmt = getFormatters(locale);
 
   const [base, setBase] = useState(defaults.base);
@@ -75,6 +83,15 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const timerRef = useRef(null);
   const topRef = useRef(null);
+
+  // PostHog 애널리틱스 및 세션 리플레이 초기화
+  useEffect(() => {
+    initAnalytics(locale);
+  }, []);
+
+  useEffect(() => {
+    setAnalyticsLocale(lang, currency);
+  }, [lang, currency]);
 
   // 로케일 변경 시 기본 인플레이션 동기화
   useEffect(() => {
@@ -98,6 +115,7 @@ export default function App() {
     const ok = await copyShareURL(base, rate, periods, fireYear);
     if (ok) {
       setCopied(true);
+      trackShareUrlCopied({ base, rate, periods, fireYear });
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), 2000);
     }
@@ -110,10 +128,26 @@ export default function App() {
     setRate(preset.rate);
     setPeriods(preset.periods);
     setFireYear(preset.fireYear != null ? preset.fireYear : null);
+    trackPresetApplied(preset, lang);
 
     // 차트 상단으로 부드럽게 스크롤
     if (topRef.current) {
       topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleSetFireYear = (yr) => {
+    setFireYear(yr);
+    if (yr != null && data[yr]) {
+      const point = data[yr];
+      trackFireYearChanged(yr, {
+        nominal: point.nominal,
+        real: point.real,
+        flowN: (point.nominal * WITHDRAW_RATE) / 12,
+        flowR: (point.real * WITHDRAW_RATE) / 12,
+      });
+    } else {
+      trackFireYearChanged(null);
     }
   };
 
@@ -276,13 +310,13 @@ export default function App() {
           fireYear={fireYear}
           hoveredYear={hoveredYear}
           setHoveredYear={setHoveredYear}
-          setFireYear={setFireYear}
+          setFireYear={handleSetFireYear}
           locale={locale}
           fmt={fmt}
         />
 
         {/* 3. FIRE 배너 */}
-        <FireBanner fireYear={fireYear} onClear={() => setFireYear(null)} locale={locale} />
+        <FireBanner fireYear={fireYear} onClear={() => handleSetFireYear(null)} locale={locale} />
 
         {/* 1. 기본 입력 (인플레이션 조절 포함) */}
         <InputCard

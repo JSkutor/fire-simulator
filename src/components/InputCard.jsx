@@ -1,4 +1,5 @@
 import React from "react";
+import { trackInflationChanged } from "../utils/analytics";
 
 export default function InputCard({
   base,
@@ -23,6 +24,11 @@ export default function InputCard({
     { label: t.inflationPresets?.avg || "2.5%", value: 0.025 },
     { label: t.inflationPresets?.high || "3.5%", value: 0.035 },
   ];
+
+  const handleSetInflation = (val, source) => {
+    setInflation(val);
+    trackInflationChanged(val, source);
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
@@ -83,7 +89,8 @@ export default function InputCard({
               placeholder="2.0"
               onChange={(e) => {
                 const val = parseFloat(e.target.value);
-                setInflation(Number.isFinite(val) ? val / 100 : defaultInflation);
+                const nextInf = Number.isFinite(val) ? val / 100 : defaultInflation;
+                handleSetInflation(nextInf, "input");
               }}
               className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:py-2 sm:text-sm font-semibold text-slate-800"
             />
@@ -94,7 +101,7 @@ export default function InputCard({
               <button
                 key={idx}
                 type="button"
-                onClick={() => setInflation(p.value)}
+                onClick={() => handleSetInflation(p.value, "chip")}
                 className={`text-[11px] px-2 py-0.5 rounded-md border transition font-medium ${
                   Math.abs(currentInflationPct - p.value * 100) < 0.05
                     ? "bg-blue-50 border-blue-300 text-blue-700 font-semibold"
